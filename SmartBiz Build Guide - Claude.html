@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartBiz OS — Complete Build Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06070f;--s:#0b0d1c;--s2:#12152a;--s3:#191c35;
+  --b:#1e2138;--bl:#282c45;
+  --a:#4361EE;--al:#6b83f5;--ag:rgba(67,97,238,0.1);
+  --g:#06D6A0;--gg:rgba(6,214,160,0.08);
+  --am:#f59e0b;--r:#ef4444;--v:#8b5cf6;--cy:#06b6d4;--pk:#ec4899;
+  --t:#dde3f0;--ts:#f0f4ff;--m:#6b7280;--ml:#9ca3b8;
+  --hf:'Bricolage Grotesque',sans-serif;
+  --bf:'Figtree',sans-serif;
+  --cf:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--t);font-family:var(--bf);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--bl);border-radius:3px;}
+.wrap{max-width:1020px;margin:0 auto;padding:0 32px;}
+h2{font-family:var(--hf);font-size:clamp(26px,3.5vw,40px);font-weight:800;letter-spacing:-1.5px;color:var(--ts);margin-bottom:8px;}
+h3{font-family:var(--hf);font-size:17px;font-weight:700;color:var(--ts);margin:28px 0 10px;}
+p{color:var(--ml);margin-bottom:10px;font-size:14px;}
+p strong{color:var(--t);}
+ul,ol{padding-left:20px;color:var(--ml);}
+li{margin-bottom:5px;font-size:14px;}
+li strong{color:var(--t);}
+
+/* HEADER */
+.hdr{padding:56px 0 44px;border-bottom:1px solid var(--b);background:radial-gradient(ellipse at 15% 50%,rgba(67,97,238,0.07) 0%,transparent 55%),var(--bg);}
+.hdr-badge{font-family:var(--hf);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--g);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.hdr-badge::before{content:'';display:block;width:24px;height:2px;background:var(--g);}
+.hdr-sub{font-size:15px;color:var(--ml);max-width:620px;margin-top:8px;}
+.hdr-stats{display:flex;gap:28px;margin-top:32px;padding-top:24px;border-top:1px solid var(--b);flex-wrap:wrap;}
+.hs{display:flex;flex-direction:column;gap:3px;}
+.hs-n{font-family:var(--hf);font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1;}
+.hs-l{font-size:12px;color:var(--m);}
+
+/* TOC */
+.toc{padding:28px 0;border-bottom:1px solid var(--b);}
+.toc-row{display:flex;gap:7px;flex-wrap:wrap;}
+.tp{font-family:var(--hf);font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px;background:var(--s);border:1px solid var(--b);color:var(--ml);text-decoration:none;transition:all 0.2s;}
+.tp:hover{border-color:var(--a);color:var(--ts);}
+
+/* SECTIONS */
+.sec{padding:56px 0;border-bottom:1px solid var(--b);}
+.sec:last-of-type{border-bottom:none;}
+.sec-tag{font-family:var(--hf);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--al);margin-bottom:10px;display:block;}
+
+/* CALLOUTS */
+.cl{padding:14px 18px;border-radius:9px;margin:14px 0;font-size:13px;color:var(--ml);}
+.cl.info{background:rgba(67,97,238,0.06);border:1px solid rgba(67,97,238,0.2);}
+.cl.info strong{color:#818cf8;}
+.cl.ok{background:rgba(6,214,160,0.05);border:1px solid rgba(6,214,160,0.2);}
+.cl.ok strong{color:var(--g);}
+.cl.warn{background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.2);}
+.cl.warn strong{color:var(--am);}
+.cl.danger{background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.2);}
+.cl.danger strong{color:#f87171;}
+
+/* MODULE NAV */
+.mod-nav{display:flex;flex-direction:column;gap:3px;margin-bottom:32px;}
+.mn-item{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--s);border:1px solid var(--b);border-radius:10px;cursor:pointer;transition:all 0.15s;text-decoration:none;}
+.mn-item:hover{border-color:var(--bl);background:var(--s2);}
+.mn-item.active{border-color:var(--a);background:var(--ag);}
+.mn-num{font-family:var(--hf);font-size:12px;font-weight:800;color:var(--a);background:rgba(67,97,238,0.1);border:1px solid rgba(67,97,238,0.2);width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mn-name{font-family:var(--hf);font-size:14px;font-weight:700;color:var(--ts);flex:1;}
+.mn-meta{display:flex;gap:6px;}
+.mn-chip{font-family:var(--hf);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;}
+.ch-hrs{background:rgba(245,158,11,0.1);color:var(--am);border:1px solid rgba(245,158,11,0.2);}
+.ch-wk{background:rgba(67,97,238,0.1);color:var(--al);border:1px solid rgba(67,97,238,0.2);}
+.ch-blk{background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.2);}
+.ch-blk.med{background:rgba(245,158,11,0.1);color:var(--am);border-color:rgba(245,158,11,0.2);}
+
+/* STEP ACCORDION */
+.steps{display:flex;flex-direction:column;gap:4px;margin-top:16px;}
+.step{background:var(--s);border:1px solid var(--b);border-radius:10px;overflow:hidden;}
+.step-h{padding:15px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;}
+.step-h:hover{background:var(--s2);}
+.sn{font-family:var(--hf);font-size:12px;font-weight:800;color:var(--a);background:rgba(67,97,238,0.1);border:1px solid rgba(67,97,238,0.2);width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.st{font-family:var(--hf);font-size:14px;font-weight:700;color:var(--ts);flex:1;}
+.sd{font-size:12px;font-weight:700;font-family:var(--hf);color:var(--am);background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.15);padding:3px 10px;border-radius:5px;white-space:nowrap;}
+.sarr{color:var(--m);font-size:14px;transition:transform 0.2s;flex-shrink:0;}
+.sarr.open{transform:rotate(180deg);}
+.step-b{display:none;padding:0 20px 18px;}
+.step-b.open{display:block;}
+.step-b ul{margin:8px 0;}
+.step-b li{font-size:13px;color:var(--ml);margin-bottom:5px;}
+.step-b li strong{color:var(--t);}
+.step-b h4{font-family:var(--hf);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--al);margin:16px 0 6px;}
+
+/* CODE BLOCKS */
+.cb-wrap{margin:12px 0;}
+.cb-label{font-family:var(--hf);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--m);margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;}
+.cb{background:var(--s2);border:1px solid var(--b);border-radius:9px;padding:16px 18px;font-family:var(--cf);font-size:12px;color:var(--ml);line-height:1.8;overflow-x:auto;white-space:pre;}
+.cb .cm{color:var(--m);font-style:italic;}
+.cb .kw{color:var(--al);}
+.cb .st{color:var(--am);}
+.cb .fn{color:var(--cy);}
+.cb .vl{color:var(--g);}
+.cb .co{color:var(--ml);}
+.copy-b{font-family:var(--hf);font-size:10px;font-weight:700;color:var(--al);background:rgba(67,97,238,0.08);border:1px solid rgba(67,97,238,0.2);padding:3px 9px;border-radius:4px;cursor:pointer;transition:all 0.15s;}
+.copy-b:hover{background:rgba(67,97,238,0.14);}
+.copy-b.done{color:var(--g);border-color:rgba(6,214,160,0.3);background:rgba(6,214,160,0.08);}
+
+/* DIRECTORY TREE */
+.tree{background:var(--s2);border:1px solid var(--b);border-radius:9px;padding:16px 18px;font-family:var(--cf);font-size:12px;line-height:1.9;margin:12px 0;}
+.tr{color:var(--ml);}
+.td{color:var(--g);}
+.tc{color:var(--am);}
+.tf{color:var(--t);}
+.tm{color:var(--m);}
+
+/* ENV TABLE */
+.env-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;}
+.env-table th{font-family:var(--hf);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--al);text-align:left;padding:9px 12px;border-bottom:1px solid var(--b);background:var(--s);}
+.env-table td{padding:10px 12px;border-bottom:1px solid rgba(30,33,56,0.4);color:var(--ml);vertical-align:top;}
+.env-table td:first-child{font-family:var(--cf);font-size:12px;color:var(--g);}
+.env-table td strong{color:var(--t);}
+.env-table tr:last-child td{border-bottom:none;}
+
+/* TWO COL */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
+.mc{background:var(--s);border:1px solid var(--b);border-radius:10px;padding:16px;}
+.mc h4{font-family:var(--hf);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--al);margin:0 0 10px;}
+.mc ul{list-style:none;padding:0;}
+.mc li{font-size:13px;color:var(--ml);margin-bottom:5px;display:flex;gap:8px;}
+.mc li::before{content:'→';color:var(--a);font-weight:700;flex-shrink:0;}
+
+/* SCHEMA BOX */
+.schema{background:var(--s2);border:1px solid var(--b);border-radius:9px;padding:16px 18px;margin:12px 0;}
+.schema-title{font-family:var(--hf);font-size:13px;font-weight:700;color:var(--ts);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.schema-fields{display:flex;flex-wrap:wrap;gap:6px;}
+.sf{font-family:var(--cf);font-size:11px;padding:3px 9px;border-radius:5px;background:var(--s);border:1px solid var(--b);}
+.sf.pk{color:var(--am);border-color:rgba(245,158,11,0.2);}
+.sf.fk{color:var(--al);border-color:rgba(67,97,238,0.2);}
+.sf.nn{color:var(--g);border-color:rgba(6,214,160,0.2);}
+.sf.opt{color:var(--ml);}
+
+/* API ENDPOINT */
+.ep{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--s);border:1px solid var(--b);border-radius:8px;margin-bottom:6px;}
+.ep-method{font-family:var(--hf);font-size:11px;font-weight:800;padding:3px 9px;border-radius:5px;flex-shrink:0;margin-top:1px;}
+.m-get{background:rgba(6,214,160,0.1);color:var(--g);border:1px solid rgba(6,214,160,0.2);}
+.m-post{background:rgba(67,97,238,0.1);color:var(--al);border:1px solid rgba(67,97,238,0.2);}
+.m-del{background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.2);}
+.m-patch{background:rgba(245,158,11,0.1);color:var(--am);border:1px solid rgba(245,158,11,0.2);}
+.ep-path{font-family:var(--cf);font-size:12px;color:var(--ts);flex:1;}
+.ep-desc{font-size:12px;color:var(--m);}
+
+/* CHECKLIST */
+.ck-list{display:flex;flex-direction:column;gap:3px;margin-top:14px;}
+.ck-item{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:var(--s);border:1px solid var(--b);border-radius:9px;cursor:pointer;user-select:none;}
+.ck-item.done{opacity:0.5;}
+.ck-box{width:20px;height:20px;border-radius:5px;border:2px solid var(--bl);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;background:var(--s2);}
+.ck-item.done .ck-box{background:var(--g);border-color:var(--g);}
+.ck-item.done .ck-box::after{content:'✓';color:#000;font-size:11px;font-weight:800;}
+.ck-content{}
+.ck-text{font-family:var(--hf);font-size:13px;font-weight:700;color:var(--ts);margin-bottom:2px;}
+.ck-item.done .ck-text{text-decoration:line-through;color:var(--m);}
+.ck-sub{font-size:12px;color:var(--m);line-height:1.5;}
+.ck-tag{font-family:var(--hf);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;flex-shrink:0;margin-top:2px;}
+
+/* DIVIDER */
+.div{height:1px;background:var(--b);margin:24px 0;}
+
+footer{padding:44px 0;border-top:1px solid var(--b);text-align:center;}
+footer p{font-size:13px;color:var(--m);}
+@media(max-width:700px){.two{grid-template-columns:1fr;}.wrap{padding:0 18px;}.sec{padding:40px 0;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-badge">Build Guide</div>
+  <h2>SmartBiz OS — How to Actually Build It</h2>
+  <p class="hdr-sub">Step-by-step implementation for all 9 modules. Exact commands, file structures, code snippets, API calls, and testing steps. The spec told you what. This tells you how.</p>
+  <div class="hdr-stats">
+    <div class="hs"><div class="hs-n" style="color:var(--a)">9</div><div class="hs-l">Modules</div></div>
+    <div class="hs"><div class="hs-n" style="color:var(--g)">4</div><div class="hs-l">Sprints (2 weeks each)</div></div>
+    <div class="hs"><div class="hs-n" style="color:var(--am)">~280hrs</div><div class="hs-l">Total effort</div></div>
+    <div class="hs"><div class="hs-n" style="color:var(--v)">7</div><div class="hs-l">Engineers</div></div>
+    <div class="hs"><div class="hs-n" style="color:var(--cy)">FastAPI</div><div class="hs-l">Backend language</div></div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-row">
+    <a class="tp" href="#prereqs">Prerequisites</a>
+    <a class="tp" href="#repo">Repo Setup</a>
+    <a class="tp" href="#m0">M0 Foundation</a>
+    <a class="tp" href="#m1">M1 RAG Chatbot</a>
+    <a class="tp" href="#m2">M2 Lead CRM</a>
+    <a class="tp" href="#m3">M3 Automation</a>
+    <a class="tp" href="#m4">M4 Doc Intelligence</a>
+    <a class="tp" href="#m5">M5 Voice→Task</a>
+    <a class="tp" href="#m6">M6 Reports</a>
+    <a class="tp" href="#m7">M7 Fintech</a>
+    <a class="tp" href="#m8">M8 Polish</a>
+    <a class="tp" href="#deploy">Deploy</a>
+    <a class="tp" href="#dod">Done Checklist</a>
+  </div>
+</div>
+
+<!-- MODULE NAV -->
+<div class="sec" id="prereqs">
+  <span class="sec-tag">Before You Start</span>
+  <h2>Prerequisites & Setup</h2>
+
+  <h3>Every team member needs these installed</h3>
+  <div class="cb-wrap">
+    <div class="cb-label"><span>Install checklist — run in terminal</span></div>
+    <div class="cb"><span class="cm"># Check versions — all must be installed before starting</span>
+<span class="fn">node</span> --version          <span class="cm"># Need v20+</span>
+<span class="fn">python</span> --version        <span class="cm"># Need 3.11+</span>
+<span class="fn">docker</span> --version        <span class="cm"># Need 24+</span>
+<span class="fn">git</span> --version           <span class="cm"># Any recent version</span>
+<span class="fn">psql</span> --version          <span class="cm"># PostgreSQL 15+</span>
+
+<span class="cm"># Install if missing (macOS)</span>
+brew install node python@3.11 postgresql docker git
+
+<span class="cm"># Install if missing (Ubuntu/WSL)</span>
+sudo apt update && sudo apt install nodejs python3.11 postgresql docker.io git</div>
+  </div>
+
+  <h3>API Keys to get before Sprint 1</h3>
+  <table class="env-table">
+    <tr><th>Key</th><th>Where to get it</th><th>Who needs it</th></tr>
+    <tr><td>ANTHROPIC_API_KEY</td><td><a href="https://console.anthropic.com">console.anthropic.com</a> → API Keys</td><td>Kartik, Aarsh, Vivaan</td></tr>
+    <tr><td>OPENAI_API_KEY</td><td><a href="https://platform.openai.com">platform.openai.com</a> → API keys (for Whisper + embeddings)</td><td>Aarsh</td></tr>
+    <tr><td>PINECONE_API_KEY</td><td><a href="https://app.pinecone.io">app.pinecone.io</a> → API Keys</td><td>Aarsh</td></tr>
+    <tr><td>PINECONE_INDEX_NAME</td><td>Create index: dimension=1536, metric=cosine, name=smartbiz</td><td>Aarsh</td></tr>
+    <tr><td>SUPABASE_URL + KEY</td><td><a href="https://app.supabase.com">app.supabase.com</a> → New project → Settings → API</td><td>Shravya, Vivaan</td></tr>
+    <tr><td>CLOUDFLARE_R2_*</td><td>Cloudflare dashboard → R2 → Create bucket → API tokens</td><td>Vivaan</td></tr>
+    <tr><td>SLACK_BOT_TOKEN</td><td>api.slack.com → Create App → Bot → OAuth token</td><td>Aryan</td></tr>
+    <tr><td>REDIS_URL</td><td>Railway → New service → Redis → connection string</td><td>Kartik</td></tr>
+  </table>
+
+  <div class="cl warn"><strong>Add all keys to Bitwarden</strong> before storing them anywhere. Never commit .env files to GitHub. The .gitignore template below covers this but double-check before every push.</div>
+</div>
+
+<!-- REPO SETUP -->
+<div class="sec" id="repo">
+  <span class="sec-tag">Project Structure</span>
+  <h2>Repository & Project Setup</h2>
+  <p>Kartik does this. One monorepo, two apps (frontend + backend), one Docker Compose for local dev.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">1</div>
+        <div class="st">Create GitHub org repo and clone</div>
+        <div class="sd">20 min</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>Commands</span></div>
+          <div class="cb"><span class="cm"># In GitHub: zerotoprod org → New repo → smartbiz-os → Private</span>
+<span class="cm"># Clone it</span>
+<span class="fn">git</span> clone https://github.com/zerotoprod/smartbiz-os
+<span class="fn">cd</span> smartbiz-os</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">2</div>
+        <div class="st">Create the full folder structure</div>
+        <div class="sd">15 min</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="tree">
+<span class="td">smartbiz-os/</span>
+├── <span class="td">frontend/</span>                    <span class="tm"># Next.js 14 app (Vinayak)</span>
+│   ├── <span class="tc">src/</span>
+│   │   ├── <span class="tc">app/</span>             <span class="tm"># App Router pages</span>
+│   │   ├── <span class="tc">components/</span>      <span class="tm"># Reusable UI components</span>
+│   │   ├── <span class="tc">lib/</span>             <span class="tm"># API client, utils</span>
+│   │   └── <span class="tc">types/</span>           <span class="tm"># TypeScript types</span>
+│   ├── <span class="tf">package.json</span>
+│   ├── <span class="tf">next.config.ts</span>
+│   └── <span class="tf">.env.local</span>
+│
+├── <span class="td">backend/</span>                     <span class="tm"># FastAPI app (Vivaan + Shravya)</span>
+│   ├── <span class="tc">app/</span>
+│   │   ├── <span class="tc">api/</span>             <span class="tm"># Route handlers per module</span>
+│   │   │   ├── <span class="tf">chat.py</span>      <span class="tm"># M1 RAG endpoints</span>
+│   │   │   ├── <span class="tf">leads.py</span>     <span class="tm"># M2 CRM endpoints</span>
+│   │   │   ├── <span class="tf">documents.py</span> <span class="tm"># M4 doc intelligence</span>
+│   │   │   ├── <span class="tf">tasks.py</span>     <span class="tm"># M5 voice→task</span>
+│   │   │   ├── <span class="tf">reports.py</span>   <span class="tm"># M6 reports</span>
+│   │   │   └── <span class="tf">finance.py</span>   <span class="tm"># M7 fintech</span>
+│   │   ├── <span class="tc">services/</span>        <span class="tm"># Business logic layer</span>
+│   │   ├── <span class="tc">models/</span>          <span class="tm"># SQLAlchemy models</span>
+│   │   ├── <span class="tc">schemas/</span>         <span class="tm"># Pydantic schemas</span>
+│   │   ├── <span class="tc">core/</span>            <span class="tm"># Config, database, auth</span>
+│   │   └── <span class="tf">main.py</span>          <span class="tm"># App entrypoint</span>
+│   ├── <span class="tc">tests/</span>
+│   ├── <span class="tf">requirements.txt</span>
+│   ├── <span class="tf">Dockerfile</span>
+│   └── <span class="tf">.env</span>
+│
+├── <span class="td">automations/</span>                 <span class="tm"># n8n workflow JSON files (Aryan)</span>
+│   ├── <span class="tf">lead-capture.json</span>
+│   ├── <span class="tf">weekly-report.json</span>
+│   └── <span class="tf">task-notifications.json</span>
+│
+├── <span class="td">scripts/</span>                     <span class="tm"># Seed scripts, migrations</span>
+│   ├── <span class="tf">seed.py</span>
+│   └── <span class="tf">migrate.py</span>
+│
+├── <span class="tf">docker-compose.yml</span>           <span class="tm"># Full local dev environment</span>
+├── <span class="tf">.gitignore</span>
+└── <span class="tf">README.md</span></div>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>Create structure — run from root</span></div>
+          <div class="cb"><span class="fn">mkdir</span> -p frontend/src/{app,components,lib,types}
+<span class="fn">mkdir</span> -p backend/app/{api,services,models,schemas,core}
+<span class="fn">mkdir</span> -p backend/tests automations scripts</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">3</div>
+        <div class="st">Docker Compose — one command spins up everything</div>
+        <div class="sd">30 min</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>docker-compose.yml — paste this at root</span><button class="copy-b" onclick="cp(this,0)">Copy</button></div>
+          <div class="cb" id="code0"><span class="kw">version</span>: <span class="st">'3.9'</span>
+
+<span class="kw">services</span>:
+  <span class="fn">db</span>:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: smartbiz
+      POSTGRES_USER: smartbiz
+      POSTGRES_PASSWORD: smartbiz_dev
+    ports: [<span class="st">"5432:5432"</span>]
+    volumes: [postgres_data:/var/lib/postgresql/data]
+
+  <span class="fn">redis</span>:
+    image: redis:7-alpine
+    ports: [<span class="st">"6379:6379"</span>]
+
+  <span class="fn">backend</span>:
+    build: ./backend
+    ports: [<span class="st">"8000:8000"</span>]
+    environment:
+      DATABASE_URL: postgresql://smartbiz:smartbiz_dev@db:5432/smartbiz
+      REDIS_URL: redis://redis:6379
+    env_file: ./backend/.env
+    volumes: [./backend:/app]
+    depends_on: [db, redis]
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  <span class="fn">frontend</span>:
+    build: ./frontend
+    ports: [<span class="st">"3000:3000"</span>]
+    env_file: ./frontend/.env.local
+    volumes: [./frontend:/app, /app/node_modules]
+    depends_on: [backend]
+    command: npm run dev
+
+<span class="kw">volumes</span>:
+  postgres_data:</div>
+        </div>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>Start everything</span></div>
+          <div class="cb">docker compose up --build     <span class="cm"># First time</span>
+docker compose up             <span class="cm"># After first time</span>
+docker compose down           <span class="cm"># Shut down</span>
+
+<span class="cm"># Frontend: http://localhost:3000</span>
+<span class="cm"># Backend API: http://localhost:8000</span>
+<span class="cm"># API Docs (Swagger): http://localhost:8000/docs</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">4</div>
+        <div class="st">Backend — FastAPI base setup</div>
+        <div class="sd">45 min — Vivaan</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/requirements.txt</span><button class="copy-b" onclick="cp(this,1)">Copy</button></div>
+          <div class="cb" id="code1">fastapi==0.115.0
+uvicorn[standard]==0.30.0
+sqlalchemy==2.0.36
+alembic==1.13.0
+asyncpg==0.30.0
+pydantic==2.9.0
+pydantic-settings==2.6.0
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.12
+httpx==0.27.0
+redis==5.1.0
+celery==5.4.0
+anthropic==0.37.0
+openai==1.54.0
+langchain==0.3.7
+langchain-openai==0.2.9
+langchain-anthropic==0.3.0
+pinecone-client==5.0.0
+boto3==1.35.0          <span class="cm"># For R2/S3 storage</span>
+pymupdf==1.24.0        <span class="cm"># PDF extraction</span>
+python-docx==1.1.0
+python-dotenv==1.0.0
+pytest==8.3.0
+pytest-asyncio==0.24.0</div>
+        </div>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/app/main.py</span><button class="copy-b" onclick="cp(this,2)">Copy</button></div>
+          <div class="cb" id="code2"><span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI
+<span class="kw">from</span> fastapi.middleware.cors <span class="kw">import</span> CORSMiddleware
+<span class="kw">from</span> app.core.config <span class="kw">import</span> settings
+<span class="kw">from</span> app.api <span class="kw">import</span> chat, leads, documents, tasks, reports, finance
+
+app = FastAPI(
+    title=<span class="st">"SmartBiz OS API"</span>,
+    version=<span class="st">"1.0.0"</span>,
+    docs_url=<span class="st">"/docs"</span>
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[settings.FRONTEND_URL, <span class="st">"http://localhost:3000"</span>],
+    allow_credentials=<span class="vl">True</span>,
+    allow_methods=[<span class="st">"*"</span>],
+    allow_headers=[<span class="st">"*"</span>],
+)
+
+<span class="cm"># Include all module routers</span>
+app.include_router(chat.router, prefix=<span class="st">"/api/ai"</span>, tags=[<span class="st">"AI"</span>])
+app.include_router(leads.router, prefix=<span class="st">"/api/leads"</span>, tags=[<span class="st">"Leads"</span>])
+app.include_router(documents.router, prefix=<span class="st">"/api/documents"</span>, tags=[<span class="st">"Documents"</span>])
+app.include_router(tasks.router, prefix=<span class="st">"/api/tasks"</span>, tags=[<span class="st">"Tasks"</span>])
+app.include_router(reports.router, prefix=<span class="st">"/api/reports"</span>, tags=[<span class="st">"Reports"</span>])
+app.include_router(finance.router, prefix=<span class="st">"/api/finance"</span>, tags=[<span class="st">"Finance"</span>])
+
+<span class="kw">@app</span>.get(<span class="st">"/"</span>)
+<span class="kw">async def</span> health(): <span class="kw">return</span> {<span class="st">"status"</span>: <span class="st">"ok"</span>, <span class="st">"app"</span>: <span class="st">"SmartBiz OS"</span>}</div>
+        </div>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/app/core/config.py</span><button class="copy-b" onclick="cp(this,3)">Copy</button></div>
+          <div class="cb" id="code3"><span class="kw">from</span> pydantic_settings <span class="kw">import</span> BaseSettings
+
+<span class="kw">class</span> <span class="fn">Settings</span>(BaseSettings):
+    <span class="cm"># Database</span>
+    DATABASE_URL: str
+    REDIS_URL: str = <span class="st">"redis://localhost:6379"</span>
+
+    <span class="cm"># AI APIs</span>
+    ANTHROPIC_API_KEY: str
+    OPENAI_API_KEY: str
+    PINECONE_API_KEY: str
+    PINECONE_INDEX_NAME: str = <span class="st">"smartbiz"</span>
+
+    <span class="cm"># Storage</span>
+    R2_ACCOUNT_ID: str = <span class="st">""</span>
+    R2_ACCESS_KEY: str = <span class="st">""</span>
+    R2_SECRET_KEY: str = <span class="st">""</span>
+    R2_BUCKET: str = <span class="st">"smartbiz-files"</span>
+
+    <span class="cm"># Auth</span>
+    SECRET_KEY: str
+    ALGORITHM: str = <span class="st">"HS256"</span>
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = <span class="vl">60</span>
+
+    <span class="cm"># App</span>
+    FRONTEND_URL: str = <span class="st">"http://localhost:3000"</span>
+    SLACK_BOT_TOKEN: str = <span class="st">""</span>
+
+    <span class="kw">class</span> Config:
+        env_file = <span class="st">".env"</span>
+
+settings = <span class="fn">Settings</span>()</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">5</div>
+        <div class="st">Database schema — Shravya designs, Vivaan implements</div>
+        <div class="sd">2 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/app/models/models.py — all tables</span><button class="copy-b" onclick="cp(this,4)">Copy</button></div>
+          <div class="cb" id="code4"><span class="kw">from</span> sqlalchemy <span class="kw">import</span> Column, String, Integer, Float, Boolean, DateTime, Text, JSON, ForeignKey
+<span class="kw">from</span> sqlalchemy.ext.declarative <span class="kw">import</span> declarative_base
+<span class="kw">from</span> sqlalchemy.sql <span class="kw">import</span> func
+<span class="kw">import</span> uuid
+
+Base = <span class="fn">declarative_base</span>()
+
+<span class="kw">def</span> <span class="fn">gen_uuid</span>(): <span class="kw">return</span> str(uuid.<span class="fn">uuid4</span>())
+
+<span class="kw">class</span> <span class="fn">User</span>(Base):
+    __tablename__ = <span class="st">"users"</span>
+    id = Column(String, primary_key=<span class="vl">True</span>, default=gen_uuid)
+    email = Column(String, unique=<span class="vl">True</span>, nullable=<span class="vl">False</span>)
+    hashed_password = Column(String, nullable=<span class="vl">False</span>)
+    name = Column(String)
+    created_at = Column(DateTime, server_default=func.now())
+
+<span class="kw">class</span> <span class="fn">Lead</span>(Base):
+    __tablename__ = <span class="st">"leads"</span>
+    id = Column(String, primary_key=<span class="vl">True</span>, default=gen_uuid)
+    name = Column(String, nullable=<span class="vl">False</span>)
+    email = Column(String)
+    company = Column(String)
+    message = Column(Text)
+    source = Column(String, default=<span class="st">"widget"</span>)
+    status = Column(String, default=<span class="st">"new"</span>)  <span class="cm"># new/contacted/qualified/won/lost</span>
+    score = Column(Integer, default=<span class="vl">0</span>)
+    ai_summary = Column(Text)
+    ai_next_action = Column(Text)
+    created_at = Column(DateTime, server_default=func.now())
+
+<span class="kw">class</span> <span class="fn">Document</span>(Base):
+    __tablename__ = <span class="st">"documents"</span>
+    id = Column(String, primary_key=<span class="vl">True</span>, default=gen_uuid)
+    user_id = Column(String, ForeignKey(<span class="st">"users.id"</span>))
+    filename = Column(String, nullable=<span class="vl">False</span>)
+    file_url = Column(String)          <span class="cm"># R2 URL</span>
+    doc_type = Column(String)          <span class="cm"># pdf/docx/txt</span>
+    status = Column(String, default=<span class="st">"processing"</span>)
+    extracted_data = Column(JSON)      <span class="cm"># AI-extracted fields</span>
+    anomalies = Column(JSON)           <span class="cm"># Flagged issues</span>
+    embedding_ids = Column(JSON)       <span class="cm"># Pinecone vector IDs</span>
+    created_at = Column(DateTime, server_default=func.now())
+
+<span class="kw">class</span> <span class="fn">ChatMessage</span>(Base):
+    __tablename__ = <span class="st">"chat_messages"</span>
+    id = Column(String, primary_key=<span class="vl">True</span>, default=gen_uuid)
+    session_id = Column(String, nullable=<span class="vl">False</span>)
+    role = Column(String)              <span class="cm"># user/assistant</span>
+    content = Column(Text)
+    sources = Column(JSON)             <span class="cm"># Document chunks used</span>
+    created_at = Column(DateTime, server_default=func.now())
+
+<span class="kw">class</span> <span class="fn">Task</span>(Base):
+    __tablename__ = <span class="st">"tasks"</span>
+    id = Column(String, primary_key=<span class="vl">True</span>, default=gen_uuid)
+    user_id = Column(String, ForeignKey(<span class="st">"users.id"</span>))
+    title = Column(String, nullable=<span class="vl">False</span>)
+    description = Column(Text)
+    priority = Column(String, default=<span class="st">"medium"</span>)
+    status = Column(String, default=<span class="st">"pending"</span>)
+    due_date = Column(DateTime)
+    voice_note_url = Column(String)
+    transcript = Column(Text)
+    created_at = Column(DateTime, server_default=func.now())
+
+<span class="kw">class</span> <span class="fn">Invoice</span>(Base):
+    __tablename__ = <span class="st">"invoices"</span>
+    id = Column(String, primary_key=<span class="vl">True</span>, default=gen_uuid)
+    document_id = Column(String, ForeignKey(<span class="st">"documents.id"</span>))
+    vendor = Column(String)
+    amount = Column(Float)
+    currency = Column(String, default=<span class="st">"INR"</span>)
+    due_date = Column(DateTime)
+    status = Column(String, default=<span class="st">"unpaid"</span>)
+    category = Column(String)
+    is_overdue = Column(Boolean, default=<span class="vl">False</span>)
+    extracted_fields = Column(JSON)
+    created_at = Column(DateTime, server_default=func.now())</div>
+        </div>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>Run migrations</span></div>
+          <div class="cb"><span class="fn">cd</span> backend
+pip install -r requirements.txt
+alembic init alembic
+<span class="cm"># Edit alembic/env.py — set target_metadata = Base.metadata</span>
+alembic revision --autogenerate -m <span class="st">"initial schema"</span>
+alembic upgrade head</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">6</div>
+        <div class="st">Frontend — Next.js 14 base setup</div>
+        <div class="sd">45 min — Vinayak</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>Bootstrap Next.js app</span></div>
+          <div class="cb"><span class="fn">cd</span> frontend
+npx create-next-app@latest . --typescript --tailwind --app --src-dir --import-alias <span class="st">"@/*"</span>
+
+<span class="cm"># Install additional deps</span>
+npm install axios zustand @tanstack/react-query lucide-react
+npm install framer-motion recharts
+npm install @radix-ui/react-dialog @radix-ui/react-dropdown-menu</div>
+        </div>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>frontend/src/lib/api.ts — API client</span><button class="copy-b" onclick="cp(this,5)">Copy</button></div>
+          <div class="cb" id="code5"><span class="kw">import</span> axios <span class="kw">from</span> <span class="st">'axios'</span>
+
+<span class="kw">const</span> api = axios.<span class="fn">create</span>({
+  baseURL: process.env.NEXT_PUBLIC_API_URL || <span class="st">'http://localhost:8000'</span>,
+  headers: { <span class="st">'Content-Type'</span>: <span class="st">'application/json'</span> }
+})
+
+<span class="cm">// Add auth token to every request</span>
+api.interceptors.request.<span class="fn">use</span>((config) => {
+  <span class="kw">const</span> token = <span class="fn">localStorage</span>.<span class="fn">getItem</span>(<span class="st">'token'</span>)
+  <span class="kw">if</span> (token) config.headers.Authorization = <span class="st">`Bearer ${token}`</span>
+  <span class="kw">return</span> config
+})
+
+<span class="kw">export default</span> api</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cl ok"><strong>Sprint 1 gate:</strong> <code>docker compose up</code> starts cleanly. <code>localhost:3000</code> shows the Next.js default page. <code>localhost:8000/docs</code> shows Swagger UI with all route groups. <code>localhost:8000/</code> returns <code>{"status":"ok"}</code>. If all three work — M0 is done.</div>
+</div>
+
+<!-- M1 RAG -->
+<div class="sec" id="m1">
+  <span class="sec-tag">Module 1 — Sprint 2</span>
+  <h2>M1: AI Business Assistant (RAG Chatbot)</h2>
+  <p>Aarsh owns AI pipeline. Vinayak owns chat UI. Vivaan owns API endpoints.</p>
+
+  <h3>How RAG works in this system</h3>
+  <div class="two">
+    <div class="mc">
+      <h4>Document Ingestion (write path)</h4>
+      <ul>
+        <li>User uploads PDF/DOCX</li>
+        <li>PyMuPDF extracts clean text</li>
+        <li>Text split into 500-token chunks with 50-token overlap</li>
+        <li>Each chunk embedded via OpenAI text-embedding-3-small</li>
+        <li>Vectors stored in Pinecone with metadata</li>
+        <li>Document record saved to PostgreSQL</li>
+      </ul>
+    </div>
+    <div class="mc">
+      <h4>Query (read path)</h4>
+      <ul>
+        <li>User sends question via chat</li>
+        <li>Question embedded → vector search in Pinecone</li>
+        <li>Top 5 relevant chunks retrieved</li>
+        <li>Claude receives: system prompt + chunks + chat history + question</li>
+        <li>Response streams back via Server-Sent Events</li>
+        <li>Sources attributed to specific documents</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">1</div>
+        <div class="st">Document ingestion pipeline — Aarsh</div>
+        <div class="sd">10 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/app/services/rag_service.py</span><button class="copy-b" onclick="cp(this,6)">Copy</button></div>
+          <div class="cb" id="code6"><span class="kw">import</span> fitz  <span class="cm"># PyMuPDF</span>
+<span class="kw">from</span> openai <span class="kw">import</span> AsyncOpenAI
+<span class="kw">from</span> pinecone <span class="kw">import</span> Pinecone
+<span class="kw">from</span> app.core.config <span class="kw">import</span> settings
+<span class="kw">import</span> uuid
+
+openai_client = <span class="fn">AsyncOpenAI</span>(api_key=settings.OPENAI_API_KEY)
+pc = <span class="fn">Pinecone</span>(api_key=settings.PINECONE_API_KEY)
+index = pc.<span class="fn">Index</span>(settings.PINECONE_INDEX_NAME)
+
+<span class="kw">async def</span> <span class="fn">ingest_document</span>(file_bytes: bytes, filename: str, doc_id: str):
+    <span class="cm">"""Extract text, chunk, embed, store in Pinecone"""</span>
+    <span class="cm"># 1. Extract text from PDF</span>
+    pdf = fitz.<span class="fn">open</span>(stream=file_bytes, filetype=<span class="st">"pdf"</span>)
+    full_text = <span class="st">""</span>
+    <span class="kw">for</span> page <span class="kw">in</span> pdf: full_text += page.<span class="fn">get_text</span>()
+
+    <span class="cm"># 2. Chunk into 500-token pieces with 50-token overlap</span>
+    words = full_text.<span class="fn">split</span>()
+    chunks, i = [], <span class="vl">0</span>
+    <span class="kw">while</span> i < len(words):
+        chunk = <span class="st">" "</span>.<span class="fn">join</span>(words[i:i+<span class="vl">500</span>])
+        chunks.<span class="fn">append</span>(chunk)
+        i += <span class="vl">450</span>  <span class="cm"># 50-token overlap</span>
+
+    <span class="cm"># 3. Embed all chunks (batch for efficiency)</span>
+    embeddings = <span class="kw">await</span> openai_client.embeddings.<span class="fn">create</span>(
+        input=chunks,
+        model=<span class="st">"text-embedding-3-small"</span>
+    )
+
+    <span class="cm"># 4. Upsert to Pinecone</span>
+    vectors = []
+    vector_ids = []
+    <span class="kw">for</span> i, (chunk, emb) <span class="kw">in</span> <span class="fn">enumerate</span>(zip(chunks, embeddings.data)):
+        vid = <span class="st">f"</span>{doc_id}<span class="st">-chunk-</span>{i}<span class="st">"</span>
+        vectors.<span class="fn">append</span>({
+            <span class="st">"id"</span>: vid,
+            <span class="st">"values"</span>: emb.embedding,
+            <span class="st">"metadata"</span>: {
+                <span class="st">"doc_id"</span>: doc_id,
+                <span class="st">"filename"</span>: filename,
+                <span class="st">"text"</span>: chunk,
+                <span class="st">"chunk_index"</span>: i
+            }
+        })
+        vector_ids.<span class="fn">append</span>(vid)
+
+    index.<span class="fn">upsert</span>(vectors=vectors)
+    <span class="kw">return</span> vector_ids
+
+<span class="kw">async def</span> <span class="fn">query_rag</span>(question: str, session_history: list, k: int = <span class="vl">5</span>):
+    <span class="cm">"""Query Pinecone, build context, stream Claude response"""</span>
+    <span class="kw">import</span> anthropic
+
+    <span class="cm"># 1. Embed the question</span>
+    q_emb = <span class="kw">await</span> openai_client.embeddings.<span class="fn">create</span>(
+        input=[question], model=<span class="st">"text-embedding-3-small"</span>
+    )
+
+    <span class="cm"># 2. Search Pinecone for top-k relevant chunks</span>
+    results = index.<span class="fn">query</span>(
+        vector=q_emb.data[<span class="vl">0</span>].embedding,
+        top_k=k, include_metadata=<span class="vl">True</span>
+    )
+
+    <span class="cm"># 3. Build context string from retrieved chunks</span>
+    context_parts = []
+    sources = []
+    <span class="kw">for</span> match <span class="kw">in</span> results.matches:
+        <span class="kw">if</span> match.score > <span class="vl">0.70</span>:  <span class="cm"># Only use relevant results</span>
+            context_parts.<span class="fn">append</span>(match.metadata[<span class="st">"text"</span>])
+            sources.<span class="fn">append</span>({
+                <span class="st">"filename"</span>: match.metadata[<span class="st">"filename"</span>],
+                <span class="st">"score"</span>: <span class="fn">round</span>(match.score, <span class="vl">2</span>)
+            })
+
+    context = <span class="st">"\n\n---\n\n"</span>.<span class="fn">join</span>(context_parts)
+
+    <span class="cm"># 4. Build messages for Claude</span>
+    system = <span class="st">f"""You are a helpful business assistant. 
+Answer questions using ONLY the provided context.
+If the answer isn't in the context, say so clearly.
+
+CONTEXT:
+{context}"""</span>
+
+    messages = session_history + [{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: question}]
+
+    <span class="cm"># 5. Stream Claude response</span>
+    client = anthropic.<span class="fn">Anthropic</span>(api_key=settings.ANTHROPIC_API_KEY)
+    <span class="kw">with</span> client.messages.<span class="fn">stream</span>(
+        model=<span class="st">"claude-sonnet-4-6"</span>,
+        max_tokens=<span class="vl">1024</span>,
+        system=system,
+        messages=messages
+    ) <span class="kw">as</span> stream:
+        <span class="kw">for</span> text <span class="kw">in</span> stream.<span class="fn">text_stream</span>():
+            <span class="kw">yield</span> text, sources</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">2</div>
+        <div class="st">API endpoints — Vivaan</div>
+        <div class="sd">6 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <h4>Endpoints to implement in backend/app/api/chat.py</h4>
+        <div class="ep"><span class="ep-method m-post">POST</span><div><div class="ep-path">/api/documents/ingest</div><div class="ep-desc">Upload file → extract → embed → store in Pinecone + PostgreSQL. Returns doc_id.</div></div></div>
+        <div class="ep"><span class="ep-method m-get">GET</span><div><div class="ep-path">/api/documents</div><div class="ep-desc">List all documents for the user. Returns array of document records.</div></div></div>
+        <div class="ep"><span class="ep-method m-del">DELETE</span><div><div class="ep-path">/api/documents/{doc_id}</div><div class="ep-desc">Delete document from PostgreSQL + delete all vectors from Pinecone by doc_id prefix.</div></div></div>
+        <div class="ep"><span class="ep-method m-post">POST</span><div><div class="ep-path">/api/ai/chat</div><div class="ep-desc">Send message + session_id. Returns SSE stream of tokens + sources JSON at end.</div></div></div>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>SSE streaming endpoint pattern</span><button class="copy-b" onclick="cp(this,7)">Copy</button></div>
+          <div class="cb" id="code7"><span class="kw">from</span> fastapi <span class="kw">import</span> APIRouter
+<span class="kw">from</span> fastapi.responses <span class="kw">import</span> StreamingResponse
+<span class="kw">import</span> json
+
+router = <span class="fn">APIRouter</span>()
+
+<span class="kw">@router</span>.post(<span class="st">"/chat"</span>)
+<span class="kw">async def</span> <span class="fn">chat</span>(body: ChatRequest):
+    <span class="kw">async def</span> <span class="fn">generate</span>():
+        sources = []
+        <span class="kw">async for</span> text, src <span class="kw">in</span> <span class="fn">query_rag</span>(body.message, body.history):
+            sources = src
+            <span class="cm"># SSE format: data: {json}\n\n</span>
+            <span class="kw">yield</span> <span class="st">f"data: </span>{json.<span class="fn">dumps</span>({<span class="st">'text'</span>: text})}<span class="st">\n\n"</span>
+        <span class="cm"># Send sources at the end</span>
+        <span class="kw">yield</span> <span class="st">f"data: </span>{json.<span class="fn">dumps</span>({<span class="st">'sources'</span>: sources, <span class="st">'done'</span>: <span class="vl">True</span>})}<span class="st">\n\n"</span>
+
+    <span class="kw">return</span> <span class="fn">StreamingResponse</span>(<span class="fn">generate</span>(), media_type=<span class="st">"text/event-stream"</span>)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">3</div>
+        <div class="st">Chat UI — Vinayak</div>
+        <div class="sd">10 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <ul>
+          <li><strong>Chat window component</strong> — message bubbles, streaming text (update state on each SSE token), loading skeleton</li>
+          <li><strong>Source chips</strong> — below each AI message, show document names with confidence scores</li>
+          <li><strong>Document panel</strong> — drag-and-drop upload, list of uploaded documents with delete button</li>
+          <li><strong>Session management</strong> — generate a UUID session_id per conversation, persist in component state</li>
+        </ul>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>SSE consuming pattern in React</span><button class="copy-b" onclick="cp(this,8)">Copy</button></div>
+          <div class="cb" id="code8"><span class="kw">const</span> <span class="fn">sendMessage</span> = <span class="kw">async</span> (message: string) => {
+  <span class="kw">const</span> response = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="st">'/api/ai/chat'</span>, {
+    method: <span class="st">'POST'</span>,
+    headers: { <span class="st">'Content-Type'</span>: <span class="st">'application/json'</span> },
+    body: <span class="fn">JSON</span>.<span class="fn">stringify</span>({ message, session_id: sessionId, history })
+  })
+
+  <span class="kw">const</span> reader = response.body!.<span class="fn">getReader</span>()
+  <span class="kw">const</span> decoder = <span class="kw">new</span> <span class="fn">TextDecoder</span>()
+  <span class="kw">let</span> fullText = <span class="st">''</span>
+
+  <span class="kw">while</span> (<span class="vl">true</span>) {
+    <span class="kw">const</span> { done, value } = <span class="kw">await</span> reader.<span class="fn">read</span>()
+    <span class="kw">if</span> (done) <span class="kw">break</span>
+    <span class="kw">const</span> lines = decoder.<span class="fn">decode</span>(value).<span class="fn">split</span>(<span class="st">'\n'</span>)
+    <span class="kw">for</span> (<span class="kw">const</span> line <span class="kw">of</span> lines) {
+      <span class="kw">if</span> (!line.<span class="fn">startsWith</span>(<span class="st">'data: '</span>)) <span class="kw">continue</span>
+      <span class="kw">const</span> data = <span class="fn">JSON</span>.<span class="fn">parse</span>(line.<span class="fn">slice</span>(<span class="vl">6</span>))
+      <span class="kw">if</span> (data.text) { fullText += data.text; <span class="fn">updateLastMessage</span>(fullText) }
+      <span class="kw">if</span> (data.done) <span class="fn">setSources</span>(data.sources)
+    }
+  }
+}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- M2 LEAD CRM -->
+<div class="sec" id="m2">
+  <span class="sec-tag">Module 2 — Sprint 2</span>
+  <h2>M2: Lead Capture & Smart CRM</h2>
+  <p>Vivaan owns backend API. Vinayak owns CRM dashboard UI. Aryan owns the embed widget JS.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">1</div>
+        <div class="st">Lead API endpoints — Vivaan</div>
+        <div class="sd">6 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="ep"><span class="ep-method m-post">POST</span><div><div class="ep-path">/api/leads</div><div class="ep-desc">Create lead from widget or form. Triggers n8n webhook. Returns lead object.</div></div></div>
+        <div class="ep"><span class="ep-method m-get">GET</span><div><div class="ep-path">/api/leads</div><div class="ep-desc">List all leads. Query params: status, search, page, limit, sort_by.</div></div></div>
+        <div class="ep"><span class="ep-method m-get">GET</span><div><div class="ep-path">/api/leads/{id}</div><div class="ep-desc">Single lead with full history + AI summary + suggested next action.</div></div></div>
+        <div class="ep"><span class="ep-method m-patch">PATCH</span><div><div class="ep-path">/api/leads/{id}/status</div><div class="ep-desc">Update lead status. Triggers n8n webhook for status changes.</div></div></div>
+        <div class="ep"><span class="ep-method m-post">POST</span><div><div class="ep-path">/api/leads/{id}/summarise</div><div class="ep-desc">Ask Claude to summarise this lead and suggest next action. Updates ai_summary field.</div></div></div>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>Lead creation with AI summary + n8n webhook</span><button class="copy-b" onclick="cp(this,9)">Copy</button></div>
+          <div class="cb" id="code9"><span class="kw">@router</span>.post(<span class="st">"/"</span>)
+<span class="kw">async def</span> <span class="fn">create_lead</span>(body: LeadCreate, db: AsyncSession = Depends(<span class="fn">get_db</span>)):
+    <span class="cm"># Save to DB</span>
+    lead = <span class="fn">Lead</span>(**body.<span class="fn">model_dump</span>())
+    db.<span class="fn">add</span>(lead)
+    <span class="kw">await</span> db.<span class="fn">commit</span>()
+    <span class="kw">await</span> db.<span class="fn">refresh</span>(lead)
+
+    <span class="cm"># Async: generate AI summary (don't block the response)</span>
+    <span class="kw">import</span> asyncio
+    asyncio.<span class="fn">create_task</span>(<span class="fn">generate_lead_summary</span>(lead.id))
+
+    <span class="cm"># Trigger n8n webhook</span>
+    <span class="kw">import</span> httpx
+    <span class="kw">async with</span> httpx.<span class="fn">AsyncClient</span>() <span class="kw">as</span> client:
+        <span class="kw">await</span> client.<span class="fn">post</span>(settings.N8N_LEAD_WEBHOOK, json={
+            <span class="st">"id"</span>: lead.id, <span class="st">"name"</span>: lead.name,
+            <span class="st">"email"</span>: lead.email, <span class="st">"company"</span>: lead.company,
+            <span class="st">"message"</span>: lead.message, <span class="st">"source"</span>: lead.source
+        }, timeout=<span class="vl">5.0</span>)
+
+    <span class="kw">return</span> lead</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">2</div>
+        <div class="st">Embeddable lead widget — Aryan</div>
+        <div class="sd">6 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <p>A vanilla JS snippet that any client can paste into their website. No framework required. Sends to the SmartBiz OS API.</p>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>public/widget.js — the embeddable snippet</span><button class="copy-b" onclick="cp(this,10)">Copy</button></div>
+          <div class="cb" id="code10">(<span class="kw">function</span>() {
+  <span class="cm">// Config — client sets these when embedding</span>
+  <span class="kw">const</span> API = window.SmartBizConfig?.apiUrl || <span class="st">'https://YOUR_API_URL'</span>
+  <span class="kw">const</span> SOURCE = window.SmartBizConfig?.source || <span class="st">'widget'</span>
+
+  <span class="cm">// Create floating button</span>
+  <span class="kw">const</span> btn = document.<span class="fn">createElement</span>(<span class="st">'button'</span>)
+  btn.innerText = <span class="st">'💬 Talk to us'</span>
+  btn.style.cssText = <span class="st">'position:fixed;bottom:24px;right:24px;background:#4361EE;'</span>+
+    <span class="st">'color:#fff;border:none;padding:12px 20px;border-radius:100px;'</span>+
+    <span class="st">'font-size:14px;cursor:pointer;z-index:9999;box-shadow:0 4px 20px rgba(67,97,238,.4)'</span>
+
+  <span class="cm">// Create form modal</span>
+  <span class="kw">const</span> modal = document.<span class="fn">createElement</span>(<span class="st">'div'</span>)
+  modal.style.cssText = <span class="st">'display:none;position:fixed;bottom:80px;right:24px;'</span>+
+    <span class="st">'background:#fff;border-radius:16px;padding:24px;width:320px;'</span>+
+    <span class="st">'box-shadow:0 8px 40px rgba(0,0,0,.15);z-index:9999'</span>
+  modal.innerHTML = <span class="st">`
+    &lt;h3 style="margin:0 0 16px;font-size:16px"&gt;Get in touch&lt;/h3&gt;
+    &lt;input id="sb-name" placeholder="Your name" style="width:100%;margin-bottom:8px;
+      padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px"&gt;
+    &lt;input id="sb-email" placeholder="Email" style="width:100%;margin-bottom:8px;
+      padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px"&gt;
+    &lt;textarea id="sb-msg" placeholder="How can we help?" rows="3"
+      style="width:100%;margin-bottom:12px;padding:10px;border:1px solid #ddd;
+      border-radius:8px;font-size:14px;resize:none"&gt;&lt;/textarea&gt;
+    &lt;button id="sb-submit" style="width:100%;background:#4361EE;color:#fff;
+      border:none;padding:12px;border-radius:8px;font-size:14px;cursor:pointer"&gt;
+      Send →
+    &lt;/button&gt;
+    &lt;p id="sb-status" style="text-align:center;font-size:13px;margin-top:8px"&gt;&lt;/p&gt;
+  `</span>
+
+  btn.<span class="fn">onclick</span> = () => modal.style.display = modal.style.display === <span class="st">'none'</span> ? <span class="st">'block'</span> : <span class="st">'none'</span>
+
+  document.<span class="fn">getElementById</span>(<span class="st">'sb-submit'</span>)?.addEventListener(<span class="st">'click'</span>, <span class="kw">async</span> () => {
+    <span class="kw">const</span> payload = {
+      name: document.<span class="fn">getElementById</span>(<span class="st">'sb-name'</span>).value,
+      email: document.<span class="fn">getElementById</span>(<span class="st">'sb-email'</span>).value,
+      message: document.<span class="fn">getElementById</span>(<span class="st">'sb-msg'</span>).value,
+      source: SOURCE
+    }
+    <span class="kw">await</span> <span class="fn">fetch</span>(<span class="st">`${API}/api/leads`</span>, {
+      method: <span class="st">'POST'</span>,
+      headers: { <span class="st">'Content-Type'</span>: <span class="st">'application/json'</span> },
+      body: <span class="fn">JSON</span>.<span class="fn">stringify</span>(payload)
+    })
+    document.<span class="fn">getElementById</span>(<span class="st">'sb-status'</span>).innerText = <span class="st">'✓ Sent! We\'ll be in touch soon.'</span>
+  })
+
+  document.body.<span class="fn">appendChild</span>(btn)
+  document.body.<span class="fn">appendChild</span>(modal)
+})()</div>
+        </div>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>Client embeds it with 3 lines</span></div>
+          <div class="cb"><span class="kw">&lt;script&gt;</span>
+  window.SmartBizConfig = { apiUrl: <span class="st">'https://api.yourdomain.com'</span>, source: <span class="st">'homepage'</span> }
+<span class="kw">&lt;/script&gt;</span>
+<span class="kw">&lt;script</span> src=<span class="st">"https://cdn.yourdomain.com/widget.js"</span> <span class="kw">&gt;&lt;/script&gt;</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">3</div>
+        <div class="st">CRM Dashboard UI — Vinayak</div>
+        <div class="sd">10 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <ul>
+          <li><strong>Table view</strong> — sortable columns: Name, Company, Status, Score, Date. Click row to open detail panel.</li>
+          <li><strong>Kanban view</strong> — 5 columns: New / Contacted / Qualified / Won / Lost. Drag-and-drop between columns calls PATCH /status.</li>
+          <li><strong>Lead detail panel</strong> — slide-in from right. Shows: all lead info, AI summary, suggested next action, a "Refresh AI summary" button.</li>
+          <li><strong>Score badge</strong> — colour-coded: green (70+), amber (40–69), grey (&lt;40).</li>
+          <li><strong>Search + filter</strong> — search by name/company, filter by status dropdown.</li>
+        </ul>
+        <div class="cl info"><strong>UI library tip:</strong> Use <code>@dnd-kit/core</code> for drag-and-drop kanban (better than react-beautiful-dnd which is archived). Install: <code>npm install @dnd-kit/core @dnd-kit/sortable</code></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- M3 AUTOMATION -->
+<div class="sec" id="m3">
+  <span class="sec-tag">Module 3 — Sprint 2</span>
+  <h2>M3: Lead Nurture Automation</h2>
+  <p>Aryan owns this entirely. Built in n8n. Triggered by M2's webhook when a new lead is created.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">1</div>
+        <div class="st">n8n workflow — New Lead → AI Email → Slack → Drip</div>
+        <div class="sd">12 hrs — Aryan</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <h4>n8n nodes in order</h4>
+        <ul>
+          <li><strong>Node 1 — Webhook trigger</strong>: POST /webhook/new-lead. Receives: id, name, email, company, message, source.</li>
+          <li><strong>Node 2 — Claude email personalisation</strong>: HTTP POST to Claude API (Haiku). Prompt: "Write a 2-sentence warm intro email opening to {{name}}, who reached out about: {{message}}. Be friendly, direct, under 30 words."</li>
+          <li><strong>Node 3 — Email send (Day 0)</strong>: Send via Zoho SMTP. From: hello@zerotoprod.tech. Subject: "Re: your message, {{name}}". Body: hook + standard template.</li>
+          <li><strong>Node 4 — Slack #leads alert</strong>: Post formatted message with all lead details + a "View in CRM" deep link button.</li>
+          <li><strong>Node 5 — Wait (3 days)</strong>: n8n Wait node, 72 hours.</li>
+          <li><strong>Node 6 — Check if status changed</strong>: GET /api/leads/{{id}} from FastAPI. IF status !== "new" → stop (they replied or were contacted manually).</li>
+          <li><strong>Node 7 — Email send (Day 3)</strong>: Follow-up email template.</li>
+          <li><strong>Node 8 — Wait (4 more days)</strong>: Another Wait node.</li>
+          <li><strong>Node 9 — Final check + Day 7 email</strong>: Same status check → breakup email if still new.</li>
+        </ul>
+        <div class="cl warn"><strong>Important:</strong> Set n8n to use your <code>N8N_LEAD_WEBHOOK</code> URL. Add this to the FastAPI .env and to the backend config. The lead creation endpoint POSTs to this URL — Aryan needs to give Vivaan the webhook URL once it's set up in n8n.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- M4 DOCUMENT INTELLIGENCE -->
+<div class="sec" id="m4">
+  <span class="sec-tag">Module 4 — Sprint 3</span>
+  <h2>M4: Document Intelligence</h2>
+  <p>Aarsh owns AI extraction pipeline. Vivaan owns upload API + R2 storage. Vinayak owns the UI.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">1</div>
+        <div class="st">File upload to Cloudflare R2 — Vivaan</div>
+        <div class="sd">4 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/app/services/storage_service.py</span><button class="copy-b" onclick="cp(this,11)">Copy</button></div>
+          <div class="cb" id="code11"><span class="kw">import</span> boto3
+<span class="kw">from</span> app.core.config <span class="kw">import</span> settings
+
+s3 = boto3.<span class="fn">client</span>(
+    <span class="st">"s3"</span>,
+    endpoint_url=<span class="st">f"https://{settings.R2_ACCOUNT_ID}.r2.cloudflarestorage.com"</span>,
+    aws_access_key_id=settings.R2_ACCESS_KEY,
+    aws_secret_access_key=settings.R2_SECRET_KEY,
+    region_name=<span class="st">"auto"</span>
+)
+
+<span class="kw">def</span> <span class="fn">upload_file</span>(file_bytes: bytes, filename: str, content_type: str) -> str:
+    key = <span class="st">f"documents/{uuid4()}/{filename}"</span>
+    s3.<span class="fn">put_object</span>(
+        Bucket=settings.R2_BUCKET,
+        Key=key,
+        Body=file_bytes,
+        ContentType=content_type
+    )
+    <span class="kw">return</span> <span class="st">f"https://{settings.R2_BUCKET}.r2.dev/{key}"</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">2</div>
+        <div class="st">AI extraction pipeline — Aarsh</div>
+        <div class="sd">10 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/app/services/extraction_service.py</span><button class="copy-b" onclick="cp(this,12)">Copy</button></div>
+          <div class="cb" id="code12"><span class="kw">import</span> fitz
+<span class="kw">import</span> anthropic
+<span class="kw">import</span> json
+<span class="kw">from</span> app.core.config <span class="kw">import</span> settings
+
+EXTRACTION_PROMPT = <span class="st">"""Extract all key information from this document.
+Return a JSON object with these fields:
+- document_type: (contract/invoice/report/letter/other)
+- parties: [list of companies or people mentioned]
+- dates: {created, effective, expiry, deadline} (ISO format or null)
+- amounts: [list of {amount, currency, description}]
+- key_clauses: [list of important clauses or terms, max 5]
+- action_items: [list of required actions]
+- anomalies: [list of unusual or concerning items]
+- summary: one paragraph plain-language summary
+
+Return ONLY valid JSON, no markdown, no explanation.
+
+DOCUMENT TEXT:
+{text}"""</span>
+
+<span class="kw">async def</span> <span class="fn">extract_document</span>(file_bytes: bytes, filename: str) -> dict:
+    <span class="cm"># Extract text</span>
+    pdf = fitz.<span class="fn">open</span>(stream=file_bytes, filetype=<span class="st">"pdf"</span>)
+    text = <span class="st">""</span>
+    <span class="kw">for</span> page <span class="kw">in</span> pdf: text += page.<span class="fn">get_text</span>()
+
+    <span class="cm"># Truncate if too long (Claude context limit)</span>
+    text = text[:<span class="vl">15000</span>]
+
+    <span class="cm"># Call Claude</span>
+    client = anthropic.<span class="fn">Anthropic</span>(api_key=settings.ANTHROPIC_API_KEY)
+    response = client.messages.<span class="fn">create</span>(
+        model=<span class="st">"claude-sonnet-4-6"</span>,
+        max_tokens=<span class="vl">2000</span>,
+        messages=[{
+            <span class="st">"role"</span>: <span class="st">"user"</span>,
+            <span class="st">"content"</span>: EXTRACTION_PROMPT.<span class="fn">format</span>(text=text)
+        }]
+    )
+
+    <span class="cm"># Parse JSON response</span>
+    <span class="kw">try</span>:
+        extracted = json.<span class="fn">loads</span>(response.content[<span class="vl">0</span>].text)
+    <span class="kw">except</span>:
+        extracted = {<span class="st">"error"</span>: <span class="st">"extraction failed"</span>, <span class="st">"raw"</span>: response.content[<span class="vl">0</span>].text}
+
+    <span class="kw">return</span> extracted</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- M5 VOICE TO TASK -->
+<div class="sec" id="m5">
+  <span class="sec-tag">Module 5 — Sprint 3</span>
+  <h2>M5: Voice Note → Task Automation</h2>
+  <p>Aarsh owns Whisper + task extraction. Vinayak owns recording UI.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">1</div>
+        <div class="st">Voice → tasks pipeline — Aarsh</div>
+        <div class="sd">8 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/app/services/voice_service.py</span><button class="copy-b" onclick="cp(this,13)">Copy</button></div>
+          <div class="cb" id="code13"><span class="kw">import</span> openai
+<span class="kw">import</span> anthropic
+<span class="kw">import</span> json
+<span class="kw">from</span> app.core.config <span class="kw">import</span> settings
+
+openai_client = openai.<span class="fn">OpenAI</span>(api_key=settings.OPENAI_API_KEY)
+claude_client = anthropic.<span class="fn">Anthropic</span>(api_key=settings.ANTHROPIC_API_KEY)
+
+<span class="kw">async def</span> <span class="fn">voice_to_tasks</span>(audio_bytes: bytes) -> dict:
+    <span class="cm"># 1. Transcribe with Whisper</span>
+    transcript = openai_client.audio.transcriptions.<span class="fn">create</span>(
+        model=<span class="st">"whisper-1"</span>,
+        file=(<span class="st">"audio.webm"</span>, audio_bytes, <span class="st">"audio/webm"</span>)
+    )
+    text = transcript.text
+
+    <span class="cm"># 2. Extract tasks with Claude</span>
+    response = claude_client.messages.<span class="fn">create</span>(
+        model=<span class="st">"claude-haiku-4-5-20251001"</span>,
+        max_tokens=<span class="vl">1000</span>,
+        messages=[{
+            <span class="st">"role"</span>: <span class="st">"user"</span>,
+            <span class="st">"content"</span>: <span class="st">f"""Extract all action items and tasks from this voice note transcript.
+Return JSON array: [{{"title": "...", "priority": "high/medium/low", "due_date": "YYYY-MM-DD or null"}}]
+Return ONLY the JSON array, nothing else.
+
+TRANSCRIPT: {text}"""</span>
+        }]
+    )
+
+    <span class="kw">try</span>:
+        tasks = json.<span class="fn">loads</span>(response.content[<span class="vl">0</span>].text)
+    <span class="kw">except</span>:
+        tasks = []
+
+    <span class="kw">return</span> {<span class="st">"transcript"</span>: text, <span class="st">"tasks"</span>: tasks}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">2</div>
+        <div class="st">Browser recording UI — Vinayak</div>
+        <div class="sd">8 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>MediaRecorder pattern in React</span><button class="copy-b" onclick="cp(this,14)">Copy</button></div>
+          <div class="cb" id="code14"><span class="kw">const</span> [recording, setRecording] = <span class="fn">useState</span>(<span class="vl">false</span>)
+<span class="kw">const</span> mediaRef = <span class="fn">useRef</span>&lt;MediaRecorder | null&gt;(<span class="vl">null</span>)
+<span class="kw">const</span> chunksRef = <span class="fn">useRef</span>&lt;Blob[]&gt;([])
+
+<span class="kw">const</span> <span class="fn">startRecording</span> = <span class="kw">async</span> () => {
+  <span class="kw">const</span> stream = <span class="kw">await</span> navigator.mediaDevices.<span class="fn">getUserMedia</span>({ audio: <span class="vl">true</span> })
+  <span class="kw">const</span> recorder = <span class="kw">new</span> <span class="fn">MediaRecorder</span>(stream, { mimeType: <span class="st">'audio/webm'</span> })
+  chunksRef.current = []
+  recorder.ondataavailable = (e) => chunksRef.current.<span class="fn">push</span>(e.data)
+  recorder.onstop = () => <span class="fn">processAudio</span>(<span class="kw">new</span> <span class="fn">Blob</span>(chunksRef.current, { type: <span class="st">'audio/webm'</span> }))
+  recorder.<span class="fn">start</span>()
+  mediaRef.current = recorder
+  <span class="fn">setRecording</span>(<span class="vl">true</span>)
+}
+
+<span class="kw">const</span> <span class="fn">stopRecording</span> = () => {
+  mediaRef.current?.<span class="fn">stop</span>()
+  <span class="fn">setRecording</span>(<span class="vl">false</span>)
+}
+
+<span class="kw">const</span> <span class="fn">processAudio</span> = <span class="kw">async</span> (blob: Blob) => {
+  <span class="kw">const</span> formData = <span class="kw">new</span> <span class="fn">FormData</span>()
+  formData.<span class="fn">append</span>(<span class="st">'audio'</span>, blob, <span class="st">'recording.webm'</span>)
+  <span class="kw">const</span> { data } = <span class="kw">await</span> api.<span class="fn">post</span>(<span class="st">'/api/tasks/voice'</span>, formData)
+  <span class="fn">setTranscript</span>(data.transcript)
+  <span class="fn">setExtractedTasks</span>(data.tasks) <span class="cm">// Show for user to confirm before saving</span>
+}</div>
+        </div>
+        <ul>
+          <li>Show a waveform visualiser while recording (use Web Audio API AnalyserNode for real-time amplitude)</li>
+          <li>After processing: show transcript in a text area + extracted tasks as editable cards</li>
+          <li>User can edit task titles/priorities before clicking "Save All Tasks"</li>
+          <li>"Save All Tasks" calls POST /api/tasks in a loop for each confirmed task</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- M6 REPORTS -->
+<div class="sec" id="m6">
+  <span class="sec-tag">Module 6 — Sprint 3</span>
+  <h2>M6: Automated Weekly Reports</h2>
+  <p>Kartik owns the report engine. Aryan owns the n8n scheduler + email delivery.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">1</div>
+        <div class="st">Report generation endpoint — Kartik</div>
+        <div class="sd">8 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/app/api/reports.py — report generation</span><button class="copy-b" onclick="cp(this,15)">Copy</button></div>
+          <div class="cb" id="code15"><span class="kw">@router</span>.post(<span class="st">"/generate"</span>)
+<span class="kw">async def</span> <span class="fn">generate_report</span>(db: AsyncSession = Depends(<span class="fn">get_db</span>)):
+    <span class="kw">from</span> datetime <span class="kw">import</span> datetime, timedelta
+    week_ago = datetime.<span class="fn">utcnow</span>() - timedelta(days=<span class="vl">7</span>)
+
+    <span class="cm"># 1. Aggregate stats from all modules</span>
+    new_leads = <span class="kw">await</span> db.<span class="fn">execute</span>(
+        select(func.<span class="fn">count</span>(Lead.id)).where(Lead.created_at >= week_ago))
+    docs_processed = <span class="kw">await</span> db.<span class="fn">execute</span>(
+        select(func.<span class="fn">count</span>(Document.id)).where(Document.created_at >= week_ago))
+    tasks_done = <span class="kw">await</span> db.<span class="fn">execute</span>(
+        select(func.<span class="fn">count</span>(Task.id)).where(Task.status == <span class="st">"done"</span>))
+
+    stats = {
+        <span class="st">"new_leads"</span>: new_leads.<span class="fn">scalar</span>(),
+        <span class="st">"docs_processed"</span>: docs_processed.<span class="fn">scalar</span>(),
+        <span class="st">"tasks_completed"</span>: tasks_done.<span class="fn">scalar</span>(),
+    }
+
+    <span class="cm"># 2. Claude writes the narrative summary</span>
+    client = anthropic.<span class="fn">Anthropic</span>(api_key=settings.ANTHROPIC_API_KEY)
+    response = client.messages.<span class="fn">create</span>(
+        model=<span class="st">"claude-haiku-4-5-20251001"</span>,
+        max_tokens=<span class="vl">500</span>,
+        messages=[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>:
+            <span class="st">f"""Write a concise weekly business summary based on these stats:
+            New leads this week: {stats['new_leads']}
+            Documents processed: {stats['docs_processed']}  
+            Tasks completed: {stats['tasks_completed']}
+            Write 3-4 sentences. Be specific. Mention what's trending up or down.
+            Start with the most important highlight."""</span>
+        }]
+    )
+
+    <span class="kw">return</span> {
+        <span class="st">"stats"</span>: stats,
+        <span class="st">"narrative"</span>: response.content[<span class="vl">0</span>].text,
+        <span class="st">"week_ending"</span>: datetime.<span class="fn">utcnow</span>().<span class="fn">isoformat</span>()
+    }</div>
+        </div>
+        <div class="cl info"><strong>n8n scheduler:</strong> In n8n, create a Schedule Trigger node: <code>0 8 * * 1</code> (Monday 8am). Then HTTP Request node: POST to <code>/api/reports/generate</code>. Then Email Send node with the HTML report template. Aryan builds this workflow in the automations/ folder and exports it as JSON.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- M7 FINTECH -->
+<div class="sec" id="m7">
+  <span class="sec-tag">Module 7 — Sprint 4</span>
+  <h2>M7: Fintech Invoice AI</h2>
+  <p>Priyesh owns this entirely. Extends M4's document pipeline with finance-specific logic.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">1</div>
+        <div class="st">Invoice extraction + categorisation — Priyesh</div>
+        <div class="sd">28 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/app/services/finance_service.py</span><button class="copy-b" onclick="cp(this,16)">Copy</button></div>
+          <div class="cb" id="code16">INVOICE_PROMPT = <span class="st">"""Extract invoice data and return JSON:
+{
+  "vendor": "company name",
+  "invoice_number": "...",
+  "amount": 0.00,
+  "currency": "INR",
+  "due_date": "YYYY-MM-DD or null",
+  "invoice_date": "YYYY-MM-DD or null",
+  "line_items": [{"description": "...", "amount": 0.00}],
+  "category": "SaaS/Payroll/Marketing/Infrastructure/Legal/Other",
+  "payment_terms": "net 30 / on receipt / etc",
+  "is_overdue": false,
+  "anomalies": ["list any unusual terms or missing fields"]
+}
+Return ONLY valid JSON.
+INVOICE TEXT: {text}"""</span>
+
+<span class="kw">async def</span> <span class="fn">process_invoice</span>(file_bytes: bytes) -> dict:
+    <span class="cm"># Reuse M4 extraction but with finance-specific prompt</span>
+    pdf = fitz.<span class="fn">open</span>(stream=file_bytes, filetype=<span class="st">"pdf"</span>)
+    text = <span class="st">""</span>.<span class="fn">join</span>(page.<span class="fn">get_text</span>() <span class="kw">for</span> page <span class="kw">in</span> pdf)[:<span class="vl">8000</span>]
+
+    client = anthropic.<span class="fn">Anthropic</span>(api_key=settings.ANTHROPIC_API_KEY)
+    response = client.messages.<span class="fn">create</span>(
+        model=<span class="st">"claude-sonnet-4-6"</span>, max_tokens=<span class="vl">1500</span>,
+        messages=[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: INVOICE_PROMPT.<span class="fn">format</span>(text=text)}]
+    )
+
+    <span class="kw">import</span> json
+    data = json.<span class="fn">loads</span>(response.content[<span class="vl">0</span>].text)
+
+    <span class="cm"># Check if overdue</span>
+    <span class="kw">from</span> datetime <span class="kw">import</span> datetime
+    <span class="kw">if</span> data.get(<span class="st">"due_date"</span>):
+        due = datetime.<span class="fn">strptime</span>(data[<span class="st">"due_date"</span>], <span class="st">"%Y-%m-%d"</span>)
+        data[<span class="st">"is_overdue"</span>] = due < datetime.<span class="fn">utcnow</span>()
+
+    <span class="kw">return</span> data</div>
+        </div>
+        <ul style="margin-top:12px">
+          <li><strong>Finance dashboard</strong> — Vinayak builds: total spend by category (bar chart using Recharts), overdue invoices list (red badge), monthly trend line, CSV export button</li>
+          <li><strong>Category breakdown</strong> — pie or donut chart: SaaS vs Payroll vs Marketing vs Infrastructure</li>
+          <li><strong>Overdue alert</strong> — any invoice past due_date gets flagged in the UI with days overdue count</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- M8 POLISH -->
+<div class="sec" id="m8">
+  <span class="sec-tag">Module 8 — Sprint 4</span>
+  <h2>M8: Polish, QA & Demo Prep</h2>
+  <p>Kartik leads QA. Shravya does backend stress testing. Aryan does demo data + case study.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">1</div>
+        <div class="st">Demo data seed script — Kartik</div>
+        <div class="sd">4 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>scripts/seed.py — run once to populate demo data</span><button class="copy-b" onclick="cp(this,17)">Copy</button></div>
+          <div class="cb" id="code17"><span class="kw">import</span> asyncio
+<span class="kw">from</span> app.core.database <span class="kw">import</span> AsyncSessionLocal
+<span class="kw">from</span> app.models.models <span class="kw">import</span> Lead, Task, Document
+
+DEMO_LEADS = [
+    {<span class="st">"name"</span>: <span class="st">"Priya Sharma"</span>, <span class="st">"company"</span>: <span class="st">"FinFlow Inc"</span>, <span class="st">"email"</span>: <span class="st">"priya@finflow.in"</span>,
+     <span class="st">"message"</span>: <span class="st">"Need AI for processing loan applications"</span>, <span class="st">"status"</span>: <span class="st">"qualified"</span>, <span class="st">"score"</span>: <span class="vl">85</span>},
+    {<span class="st">"name"</span>: <span class="st">"Rahul Mehta"</span>, <span class="st">"company"</span>: <span class="st">"GrowFast SaaS"</span>, <span class="st">"email"</span>: <span class="st">"rahul@growfast.io"</span>,
+     <span class="st">"message"</span>: <span class="st">"Want to automate our sales pipeline"</span>, <span class="st">"status"</span>: <span class="st">"new"</span>, <span class="st">"score"</span>: <span class="vl">72</span>},
+    {<span class="st">"name"</span>: <span class="st">"Anita Rajan"</span>, <span class="st">"company"</span>: <span class="st">"Retail360"</span>, <span class="st">"email"</span>: <span class="st">"anita@retail360.com"</span>,
+     <span class="st">"message"</span>: <span class="st">"Customer support chatbot needed"</span>, <span class="st">"status"</span>: <span class="st">"contacted"</span>, <span class="st">"score"</span>: <span class="vl">58</span>},
+    <span class="cm"># Add 5-8 more for a realistic demo...</span>
+]
+
+DEMO_TASKS = [
+    {<span class="st">"title"</span>: <span class="st">"Follow up with Priya re: loan processing demo"</span>, <span class="st">"priority"</span>: <span class="st">"high"</span>, <span class="st">"status"</span>: <span class="st">"pending"</span>},
+    {<span class="st">"title"</span>: <span class="st">"Send proposal to GrowFast"</span>, <span class="st">"priority"</span>: <span class="st">"high"</span>, <span class="st">"status"</span>: <span class="st">"pending"</span>},
+    {<span class="st">"title"</span>: <span class="st">"Review Q3 invoices for anomalies"</span>, <span class="st">"priority"</span>: <span class="st">"medium"</span>, <span class="st">"status"</span>: <span class="st">"done"</span>},
+]
+
+<span class="kw">async def</span> <span class="fn">seed</span>():
+    <span class="kw">async with</span> <span class="fn">AsyncSessionLocal</span>() <span class="kw">as</span> db:
+        <span class="kw">for</span> l <span class="kw">in</span> DEMO_LEADS:
+            db.<span class="fn">add</span>(<span class="fn">Lead</span>(**l))
+        <span class="kw">for</span> t <span class="kw">in</span> DEMO_TASKS:
+            db.<span class="fn">add</span>(<span class="fn">Task</span>(**t))
+        <span class="kw">await</span> db.<span class="fn">commit</span>()
+    <span class="fn">print</span>(<span class="st">"✓ Demo data seeded"</span>)
+
+asyncio.<span class="fn">run</span>(<span class="fn">seed</span>())</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">2</div>
+        <div class="st">QA checklist — Shravya</div>
+        <div class="sd">10 hrs</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <ul>
+          <li><strong>All API endpoints return correct HTTP status codes</strong> — 200, 201, 404, 422, 500. Test with pytest.</li>
+          <li><strong>Auth middleware works</strong> — unauthenticated requests to protected endpoints return 401.</li>
+          <li><strong>File upload edge cases</strong> — empty file, non-PDF, file too large (set 10MB limit), corrupted file.</li>
+          <li><strong>Database connection pool</strong> — under load test (50 concurrent requests), no connection errors.</li>
+          <li><strong>AI failure graceful handling</strong> — if Claude API times out or errors, return a clean 503 with a user-friendly message, not a raw traceback.</li>
+          <li><strong>Every empty state has a UI</strong> — no leads shows "No leads yet · Add your first one", not a blank screen.</li>
+          <li><strong>Mobile at 375px width</strong> — every page is usable, no horizontal scroll, no overlapping elements.</li>
+        </ul>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/tests/test_api.py — test template</span></div>
+          <div class="cb"><span class="kw">import</span> pytest
+<span class="kw">from</span> httpx <span class="kw">import</span> AsyncClient
+<span class="kw">from</span> app.main <span class="kw">import</span> app
+
+<span class="kw">@pytest</span>.mark.asyncio
+<span class="kw">async def</span> <span class="fn">test_health</span>():
+    <span class="kw">async with</span> <span class="fn">AsyncClient</span>(app=app, base_url=<span class="st">"http://test"</span>) <span class="kw">as</span> client:
+        response = <span class="kw">await</span> client.<span class="fn">get</span>(<span class="st">"/"</span>)
+        <span class="kw">assert</span> response.status_code == <span class="vl">200</span>
+
+<span class="kw">@pytest</span>.mark.asyncio
+<span class="kw">async def</span> <span class="fn">test_lead_creation</span>():
+    <span class="kw">async with</span> <span class="fn">AsyncClient</span>(app=app, base_url=<span class="st">"http://test"</span>) <span class="kw">as</span> client:
+        response = <span class="kw">await</span> client.<span class="fn">post</span>(<span class="st">"/api/leads"</span>, json={
+            <span class="st">"name"</span>: <span class="st">"Test Lead"</span>, <span class="st">"email"</span>: <span class="st">"test@test.com"</span>,
+            <span class="st">"message"</span>: <span class="st">"Test message"</span>
+        })
+        <span class="kw">assert</span> response.status_code == <span class="vl">201</span>
+        <span class="kw">assert</span> response.json()[<span class="st">"id"</span>] <span class="kw">is not</span> <span class="vl">None</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEPLOY -->
+<div class="sec" id="deploy">
+  <span class="sec-tag">Going Live</span>
+  <h2>Deployment</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">1</div>
+        <div class="st">Deploy backend to Railway — Kartik</div>
+        <div class="sd">1 hr</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>Commands</span></div>
+          <div class="cb"><span class="cm"># Install Railway CLI</span>
+npm install -g @railway/cli
+railway login
+
+<span class="cm"># In the backend folder</span>
+cd backend
+railway init
+railway up
+
+<span class="cm"># Set all environment variables</span>
+railway variables set ANTHROPIC_API_KEY=your_key
+railway variables set OPENAI_API_KEY=your_key
+<span class="cm"># ... repeat for all env vars</span>
+
+<span class="cm"># Get your API URL</span>
+railway domain
+<span class="cm"># Something like: https://smartbiz-backend.up.railway.app</span></div>
+        </div>
+        <div class="cb-wrap">
+          <div class="cb-label"><span>backend/Dockerfile</span><button class="copy-b" onclick="cp(this,18)">Copy</button></div>
+          <div class="cb" id="code18"><span class="kw">FROM</span> python:3.11-slim
+<span class="kw">WORKDIR</span> /app
+<span class="kw">COPY</span> requirements.txt .
+<span class="kw">RUN</span> pip install --no-cache-dir -r requirements.txt
+<span class="kw">COPY</span> . .
+<span class="kw">CMD</span> ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">2</div>
+        <div class="st">Deploy frontend to Vercel — Vinayak</div>
+        <div class="sd">30 min</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>Commands</span></div>
+          <div class="cb"><span class="cm"># In the frontend folder</span>
+cd frontend
+npx vercel
+
+<span class="cm"># Set environment variable in Vercel dashboard</span>
+NEXT_PUBLIC_API_URL=https://smartbiz-backend.up.railway.app
+
+<span class="cm"># Set custom domain in Vercel: demo.zerotoprod.tech</span>
+<span class="cm"># Then add CNAME in Cloudflare: demo → cname.vercel-dns.com</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-h" onclick="tog(this)">
+        <div class="sn">3</div>
+        <div class="st">Run migrations on production DB — Kartik</div>
+        <div class="sd">15 min</div>
+        <div class="sarr">▼</div>
+      </div>
+      <div class="step-b">
+        <div class="cb-wrap">
+          <div class="cb-label"><span>One-time commands against production</span></div>
+          <div class="cb"><span class="cm"># Connect to Railway PostgreSQL</span>
+railway connect PostgreSQL
+
+<span class="cm"># Run migrations</span>
+DATABASE_URL=postgresql://prod_connection_string alembic upgrade head
+
+<span class="cm"># Run seed script</span>
+DATABASE_URL=postgresql://prod_connection_string python scripts/seed.py
+
+<span class="cm"># Verify: open demo.zerotoprod.tech — should show seeded data</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DONE CHECKLIST -->
+<div class="sec" id="dod">
+  <span class="sec-tag">Definition of Done</span>
+  <h2>SmartBiz OS is done when all of these are checked</h2>
+  <p>Click each item to track progress. Progress saves in your browser.</p>
+
+  <div class="ck-list" id="dod-list">
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">docker compose up works first time on any team member's machine</div><div class="ck-sub">README has exact setup steps, no tribal knowledge required</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">M0 — Login, protected routes, CI/CD auto-deploys on merge to main</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">M1 — Upload a PDF, ask it a question, get a sourced streamed answer</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">M2 — Embed widget sends a lead, it appears in CRM, Slack fires</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">M3 — n8n sends AI-personalised email to new lead within 60 seconds</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">M4 — Upload invoice PDF, see extracted fields + anomalies in UI</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">M5 — Record "call Aryan and send proposal by Friday", see 2 tasks created</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">M6 — Trigger report manually, receive formatted email within 30 seconds</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">M7 — Batch upload 3 invoices, see category breakdown chart populated</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">M8 — Seed script populates demo data, all modules show data on first load</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">No raw 500 errors visible anywhere in the UI — all errors have friendly messages</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">Mobile responsive — tested on 375px width, nothing breaks</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">demo.zerotoprod.tech is live and publicly accessible</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">GitHub repo is public with proper README</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">Aryan records 5-min Loom walkthrough of all features</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">LinkedIn case study post drafted and scheduled</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">Landing page portfolio section shows SmartBiz OS with screenshot + link</div></div></div>
+    <div class="ck-item" onclick="toggleCk(this)"><div class="ck-box"></div><div class="ck-content"><div class="ck-text">Can be screen-shared in a live sales call without anything breaking</div></div></div>
+  </div>
+  <div id="dod-progress" style="margin-top:16px;font-family:var(--hf);font-size:13px;color:var(--ml);">0 of 18 complete</div>
+</div>
+
+</div><!-- /wrap -->
+<footer><p>Zerotoprod · SmartBiz OS Build Guide · zerotoprod.tech</p></footer>
+
+<script>
+function tog(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('.sarr');
+  const open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  if(arrow)arrow.classList.toggle('open',!open);
+}
+function cp(btn,idx){
+  const el=document.getElementById('code'+idx);
+  if(!el)return;
+  navigator.clipboard.writeText(el.innerText).then(()=>{
+    btn.textContent='Copied ✓';btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},2500);
+  });
+}
+function toggleCk(item){
+  item.classList.toggle('done');
+  const done=document.querySelectorAll('.ck-item.done').length;
+  const total=document.querySelectorAll('.ck-item').length;
+  document.getElementById('dod-progress').textContent=done+' of '+total+' complete';
+  const states=Array.from(document.querySelectorAll('.ck-item')).map(i=>i.classList.contains('done'));
+  try{localStorage.setItem('smartbiz-dod',JSON.stringify(states));}catch(e){}
+}
+window.addEventListener('load',()=>{
+  try{
+    const saved=localStorage.getItem('smartbiz-dod');
+    if(saved){
+      const states=JSON.parse(saved);
+      document.querySelectorAll('.ck-item').forEach((item,i)=>{if(states[i])item.classList.add('done');});
+      const done=document.querySelectorAll('.ck-item.done').length;
+      const total=document.querySelectorAll('.ck-item').length;
+      document.getElementById('dod-progress').textContent=done+' of '+total+' complete';
+    }
+  }catch(e){}
+});
+</script>
+</body>
+</html>

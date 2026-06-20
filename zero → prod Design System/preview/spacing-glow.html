@@ -1,0 +1,16 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;padding:30px 20px;background:#08080a;color:#e8e8e8;font-family:"Bricolage Grotesque",sans-serif;}
+.row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.s{height:130px;border:1px solid #1a1a1c;background:#151517;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative;}
+.box{width:90px;height:32px;background:#00ffe0;color:#000;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;}
+.lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#888;}
+.v{font-family:ui-monospace,monospace;font-size:9px;color:#666;text-align:center;max-width:160px;line-height:1.3;}
+</style></head><body>
+<div class="row">
+  <div class="s"><div class="box">none</div><div class="lbl">Rest</div><div class="v">no shadow</div></div>
+  <div class="s"><div class="box" style="box-shadow:0 0 20px rgba(0,255,224,0.3)">sm</div><div class="lbl">Nav CTA hover</div><div class="v">0 0 20px rgba(0,255,224,0.3)</div></div>
+  <div class="s"><div class="box" style="box-shadow:0 0 30px rgba(0,255,224,0.3)">md</div><div class="lbl">Primary CTA hover</div><div class="v">0 0 30px rgba(0,255,224,0.3)</div></div>
+  <div class="s"><div class="box" style="box-shadow:0 0 40px rgba(0,255,224,0.35)">lg</div><div class="lbl">CTA active</div><div class="v">0 0 40px rgba(0,255,224,0.35)</div></div>
+</div>
+<p style="font-size:11px;color:#666;margin-top:14px">No drop shadows anywhere in the system — <b>glow replaces shadow</b>. All elevations are cyan halos.</p>
+</body></html>

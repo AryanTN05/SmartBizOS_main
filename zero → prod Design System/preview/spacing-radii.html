@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;padding:20px;background:#08080a;color:#e8e8e8;font-family:"Bricolage Grotesque",sans-serif;}
+.row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.s{height:110px;border:1px solid #1a1a1c;background:#151517;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
+.box{width:54px;height:54px;background:#00ffe0;}
+.lbl{font-size:11px;font-weight:700;}
+.v{font-family:ui-monospace,monospace;font-size:9.5px;color:#666;}
+</style></head><body>
+<div class="row">
+  <div class="s"><div class="box" style="border-radius:0"></div><div class="lbl">none</div><div class="v">0 · default</div></div>
+  <div class="s"><div class="box" style="border-radius:4px"></div><div class="lbl">sm</div><div class="v">4px · chips</div></div>
+  <div class="s"><div class="box" style="border-radius:8px"></div><div class="lbl">md</div><div class="v">8px · case img</div></div>
+  <div class="s"><div class="box" style="border-radius:16px"></div><div class="lbl">lg</div><div class="v">16px · stat card</div></div>
+  <div class="s"><div class="box" style="border-radius:50%"></div><div class="lbl">full</div><div class="v">50% · flow nodes</div></div>
+</div>
+<p style="font-size:11px;color:#666;margin-top:10px">Default is <b>square</b>. CTAs, nav pill, service + project cards all use <code>border-radius: 0</code>.</p>
+</body></html>

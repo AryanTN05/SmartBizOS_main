@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:wght@400;500;600;700;800&family=Geist:wght@400;500;600;700;800&family=General+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;padding:22px 24px;background:#08080a;color:#e8e8e8;font-family:"Inter",system-ui,sans-serif;}
+.row{display:grid;grid-template-columns:110px 1fr;gap:18px;align-items:baseline;padding:10px 0;border-bottom:1px solid #1a1a1c;}
+.row:last-child{border:none;}
+.tag{font-family:ui-monospace,monospace;font-size:9.5px;color:#666;line-height:1.35;}
+.tag b{color:#888;display:block;font-family:"Inter",sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:3px;}
+.headline{font-weight:600;letter-spacing:-0.03em;line-height:0.95;}
+.headline.bricolage{font-weight:700;}
+.headline.inter{font-weight:600;}
+.headline.geist{font-weight:500;}
+.headline.gs{font-weight:500;}
+.accent{color:#00ffe0;}
+.note{font-size:11px;color:#666;line-height:1.5;margin-top:12px;padding-top:10px;border-top:1px dashed #222224;}
+.note b{color:#e8e8e8;}
+.badge{display:inline-block;padding:2px 8px;border:1px solid #222224;font-size:9px;color:#888;text-transform:uppercase;letter-spacing:0.12em;margin-left:8px;vertical-align:middle;}
+.badge.rec{border-color:#00ffe0;color:#00ffe0;}
+</style></head><body>
+<div class="row">
+  <div class="tag"><b>Bricolage</b>700 · -0.035em<br>current marketing</div>
+  <div class="headline bricolage" style="font-family:'Bricolage Grotesque';font-size:44px">From <span class="accent">zero to production.</span><span class="badge">marketing only</span></div>
+</div>
+<div class="row">
+  <div class="tag"><b>Geist</b>500 · -0.03em<br>modern neutral</div>
+  <div class="headline geist" style="font-family:'Geist';font-size:44px">From <span class="accent">zero to production.</span><span class="badge rec">recommended for product</span></div>
+</div>
+<div class="row">
+  <div class="tag"><b>Inter</b>500 · -0.03em<br>workhorse</div>
+  <div class="headline inter" style="font-family:'Inter';font-size:44px;font-weight:500">From <span class="accent">zero to production.</span><span class="badge">safe fallback</span></div>
+</div>
+<div class="row">
+  <div class="tag"><b>General Sans</b>500 · -0.02em<br>warm neutral</div>
+  <div class="headline gs" style="font-family:'General Sans';font-size:44px;letter-spacing:-0.02em">From <span class="accent">zero to production.</span><span class="badge">alt</span></div>
+</div>
+<p class="note"><b>Split the system.</b> Keep <b>Bricolage Grotesque</b> for the marketing site headlines (brand voice, condensed display feel). For any product/platform surface — dashboards, forms, dense UI — switch the <code>--font-display</code> + <code>--font-body</code> vars to <b>Geist</b> (primary rec) or <b>Inter</b> (fallback). Both are free, variable, and neutral enough for long UI sessions without dropping the crisp dark-mode feel.</p>
+</body></html>

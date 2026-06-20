@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;padding:20px;background:#08080a;font-family:"Bricolage Grotesque",system-ui,sans-serif;color:#e8e8e8;}
+.wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px;}
+.s{border:1px solid #1a1a1c;padding:16px;display:flex;flex-direction:column;gap:8px;height:160px;box-sizing:border-box;}
+.h{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#484848;}
+.v{font-family:ui-monospace,monospace;font-size:10px;color:#666;}
+.g{flex:1;background:linear-gradient(135deg,#2c5cf0 0%,#3dd871 100%);border-radius:2px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:48px;color:#fff;letter-spacing:-0.05em;}
+.chip{width:100%;flex:1;border-radius:2px;}
+.note{font-size:11px;color:#888;line-height:1.4;}
+</style></head><body>
+<div class="wrap">
+  <div class="s">
+    <div class="h">Brand gradient · logo only</div>
+    <div class="g">ZP</div>
+    <div class="v">linear-gradient(135deg,#2c5cf0 → #3dd871)</div>
+  </div>
+  <div class="s">
+    <div class="h">brand-blue</div>
+    <div class="chip" style="background:#2c5cf0"></div>
+    <div class="v">#2c5cf0</div>
+  </div>
+  <div class="s">
+    <div class="h">brand-green</div>
+    <div class="chip" style="background:#3dd871"></div>
+    <div class="v">#3dd871</div>
+  </div>
+</div>
+<p class="note" style="margin-top:10px">Gradient is scoped to the <code>ZP</code> mark. Do <b>not</b> use it as a section background, CTA fill, or accent — that role belongs to <code>--accent</code> (<code>#00ffe0</code>).</p>
+</body></html>

@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;padding:22px;background:#08080a;color:#e8e8e8;font-family:"Bricolage Grotesque",sans-serif;}
+.grid{display:grid;grid-template-columns:1fr 1.4fr;gap:14px;}
+.card{padding:32px;border-radius:16px;background:#101012;border:1px solid #1a1a1c;text-align:center;box-shadow:0 0 30px rgba(0,255,224,0.08);}
+.big{font-size:52px;font-weight:500;color:#00ffe0;line-height:1;margin-bottom:10px;letter-spacing:-0.02em;}
+.title{font-size:18px;font-weight:600;margin-bottom:8px;}
+.sub{font-size:12px;color:#888;line-height:1.55;}
+.strip{display:flex;gap:0;border-radius:6px;overflow:hidden;border:1px solid rgba(0,255,224,0.18);background:rgba(255,255,255,0.03);}
+.strip .m{flex:1;padding:16px 10px;text-align:center;}
+.strip .m + .m{border-left:1px solid rgba(0,255,224,0.12);}
+.strip .v{color:#00ffe0;font-size:22px;font-weight:500;line-height:1;letter-spacing:-0.01em;}
+.strip .l{color:rgba(255,255,255,0.35);font-size:9.5px;margin-top:6px;text-transform:uppercase;letter-spacing:0.1em;}
+.lbl{font-size:10px;color:#484848;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:10px;}
+</style></head><body>
+<div class="grid">
+  <div>
+    <div class="lbl">About · hero stat</div>
+    <div class="card">
+      <div class="big">10+</div>
+      <div class="title">World-Class Engineers</div>
+      <div class="sub">A vetted, specialized team ready to ship your product.</div>
+    </div>
+  </div>
+  <div>
+    <div class="lbl">Case study · metric strip</div>
+    <div class="strip" style="margin-top:6px">
+      <div class="m"><div class="v">400/day</div><div class="l">ad variants</div></div>
+      <div class="m"><div class="v">80%+</div><div class="l">faster to live</div></div>
+      <div class="m"><div class="v">70–85%</div><div class="l">cost reduction</div></div>
+    </div>
+    <div class="sub" style="margin-top:20px;font-size:12px;color:#666">Horizontal strip used across all case-study flowcharts. Values always <code>--accent</code>, labels <code>rgba(255,255,255,0.35)</code>.</div>
+  </div>
+</div>
+</body></html>

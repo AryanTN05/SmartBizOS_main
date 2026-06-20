@@ -1,0 +1,106 @@
+/* SmartBiz OS — product skin over zero → prod brand.
+   Inherits: cyan accent, Geist mono, square corners, bold voice.
+   Overrides: denser type scale, dashboard-specific semantic tokens. */
+
+:root {
+  /* ========= CORE BRAND (inherited from ./brand.css) ========= */
+  --sb-accent: #00ffe0;
+  --sb-accent-dim: #0a9b89;
+  --sb-accent-glow: rgba(0, 255, 224, 0.18);
+  --sb-accent-bg: rgba(0, 255, 224, 0.08);
+
+  /* ========= SEMANTIC CATEGORICAL (for charts, lead tags, status) ========= */
+  --sb-hot: #ff5a6a;          /* hot lead / anomaly / failed */
+  --sb-warm: #ffb547;         /* warm / in-progress / pending */
+  --sb-cool: #7dd3fc;         /* cool / neutral info */
+  --sb-violet: #b794ff;       /* lara-authored / AI */
+  --sb-lime: #a3ff5a;         /* won / completed positive */
+
+  /* ========= NEUTRALS ========= */
+  --sb-bg: #08080a;           /* page */
+  --sb-bg-2: #0b0b0d;         /* sidebar, subtle panels */
+  --sb-panel: #101012;        /* input, table row hover */
+  --sb-card: #151517;         /* card */
+  --sb-card-2: #1a1a1c;       /* elevated card / modal */
+  --sb-line: #1a1a1c;         /* borders */
+  --sb-line-2: #222224;       /* stronger border */
+  --sb-line-3: #2a2a2c;       /* hover border */
+
+  /* ========= TEXT ========= */
+  --sb-fg: #f0f0f0;           /* primary */
+  --sb-fg-2: #c8c8c8;         /* body */
+  --sb-fg-3: #888;            /* secondary */
+  --sb-fg-4: #666;            /* tertiary */
+  --sb-fg-5: #484848;         /* label / muted */
+  --sb-fg-6: #2a2a2c;         /* dividers / disabled text */
+
+  /* ========= TYPOGRAPHY ========= */
+  --sb-font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --sb-font: "Geist", "Inter", system-ui, sans-serif;
+  --sb-font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
+  /* ========= DENSITY (medium — breathable but not sparse) ========= */
+  --sb-gap-1: 4px;
+  --sb-gap-2: 8px;
+  --sb-gap-3: 12px;
+  --sb-gap-4: 16px;
+  --sb-gap-5: 20px;
+  --sb-gap-6: 24px;
+  --sb-gap-8: 32px;
+
+  /* Square by default. Only use these for pills (chips, avatars, dots). */
+  --sb-radius-pill: 999px;
+  --sb-radius-subtle: 2px;
+}
+
+/* ========= GLOBAL RESET ========= */
+html, body { margin: 0; background: var(--sb-bg); color: var(--sb-fg); font-family: var(--sb-font); font-size: 14px; }
+* { box-sizing: border-box; }
+a { color: inherit; }
+button { font-family: inherit; }
+::selection { background: var(--sb-accent); color: #000; }
+input, textarea { font-family: inherit; }
+
+/* Custom scrollbar */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: var(--sb-line-2); border: 2px solid var(--sb-bg); }
+*::-webkit-scrollbar-thumb:hover { background: var(--sb-line-3); }
+
+/* ========= UTILITY CLASSES ========= */
+.sb-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--sb-fg-5);
+  font-weight: 600;
+  font-family: var(--sb-font-mono);
+}
+.sb-mono { font-family: var(--sb-font-mono); }
+.sb-accent { color: var(--sb-accent); }
+
+/* ========= SMARTBIZ-SPECIFIC MOTIFS ========= */
+
+/* Tiny terminal-style prompt: ▸ label */
+.sb-prompt::before {
+  content: "▸ ";
+  color: var(--sb-accent);
+  font-weight: 700;
+}
+
+/* Corner brackets — product-chrome motif, evokes terminal viewport */
+.sb-brackets {
+  position: relative;
+}
+.sb-brackets::before,
+.sb-brackets::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-color: var(--sb-accent);
+  border-style: solid;
+  pointer-events: none;
+}
+.sb-brackets::before { top: 0; left: 0; border-width: 1px 0 0 1px; }
+.sb-brackets::after { bottom: 0; right: 0; border-width: 0 1px 1px 0; }

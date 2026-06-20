@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;padding:24px;background:#08080a;color:#e8e8e8;font-family:"Bricolage Grotesque",system-ui,sans-serif;}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.s{border:1px solid #1a1a1c;background:#0b0b0d;padding:18px;display:flex;flex-direction:column;gap:12px;min-height:130px;}
+.h{font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:#484848;}
+.btn-primary{background:#00ffe0;color:#000;padding:14px 28px;font-weight:600;font-size:13px;letter-spacing:0.02em;border:none;display:inline-block;align-self:flex-start;cursor:pointer;}
+.btn-primary.hover{box-shadow:0 0 30px rgba(0,255,224,0.3);}
+.btn-ghost{color:#e8e8e8;padding:14px 28px;font-weight:600;font-size:13px;letter-spacing:0.02em;display:inline-block;align-self:flex-start;}
+.btn-ghost.hover{letter-spacing:0.1em;}
+.btn-sm{background:#00ffe0;color:#000;padding:6px 20px;font-weight:600;font-size:13px;display:inline-block;align-self:flex-start;}
+.btn-outline{border:1px solid #222224;color:#888;padding:14px 28px;font-size:13px;display:inline-block;align-self:flex-start;}
+</style></head><body>
+<div class="grid">
+  <div class="s"><div class="h">Primary · rest</div><a class="btn-primary">Book a Call</a></div>
+  <div class="s"><div class="h">Primary · hover</div><a class="btn-primary hover">Book a Call</a></div>
+  <div class="s"><div class="h">Primary · nav · sm</div><a class="btn-sm">Book a Call</a></div>
+  <div class="s"><div class="h">Ghost · rest</div><a class="btn-ghost">See Our Work →</a></div>
+  <div class="s"><div class="h">Ghost · hover (tracks out)</div><a class="btn-ghost hover">See Our Work →</a></div>
+  <div class="s"><div class="h">Outline secondary</div><a class="btn-outline">hello@zerotoprod.tech</a></div>
+</div>
+</body></html>

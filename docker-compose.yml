@@ -1,0 +1,28 @@
+# docker compose up -d  →  brings up Postgres 16 + pgvector on :5432
+# Connection string for backend:
+#   DATABASE_URL=postgresql+asyncpg://smartbiz:smartbiz@localhost:5432/smartbiz
+#
+# After first boot:
+#   psql postgresql://smartbiz:smartbiz@localhost:5432/smartbiz -f backend/db/schema.sql
+#   cd backend && python -m scripts.seed_all
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: smartbiz
+      POSTGRES_PASSWORD: smartbiz
+      POSTGRES_DB: smartbiz
+    ports:
+      - "5432:5432"
+    volumes:
+      - smartbiz_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smartbiz -d smartbiz"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  smartbiz_pgdata:

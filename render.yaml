@@ -1,0 +1,54 @@
+# render.yaml — Render Blueprint for SmartBiz OS.
+#
+# Render is the no-credit-card alternative to Cloud Run for the backend.
+# See docs/research/2026-04-19-tech-research.md "Update — 2026-04-30 — Hosting
+# re-research" for why this exists alongside the Cloud Run path.
+#
+# Deploy:
+#   1. Push this file to main
+#   2. https://render.com/docs/blueprints → connect repo → Render reads this
+#   3. Set DATABASE_URL + JWT_SECRET + ADMIN_USERS_JSON in the dashboard
+#      (or via render env set after first deploy)
+#
+# Free-tier caveats:
+#   - 15-min idle sleep, ~30s wake. Keep warm with UptimeRobot pinging /health
+#   - No custom domain on free; URL is https://smartbiz-api.onrender.com
+#   - 100-minute request timeout (plenty for LLM agent loops)
+
+services:
+  - type: web
+    name: smartbiz-api
+    runtime: docker
+    plan: free
+    region: oregon              # US West — required for Gemini Live API support
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true                # deploy on every push to main
+    envVars:
+      # Set these in the Render dashboard — never commit secrets here.
+      - key: DATABASE_URL
+        sync: false                 # dashboard-only (Neon connection string)
+      - key: JWT_SECRET
+        sync: false                 # dashboard-only
+      - key: ADMIN_USERS_JSON
+        sync: false                 # dashboard-only (mint with scripts/create_admin.py)
+      - key: CORS_ORIGINS
+        value: https://demo.zerotoprod.tech,https://smartbiz-os.vercel.app,https://www.zerotoprod.tech,https://zerotoprod.tech,http://localhost:3000,http://localhost:5173,http://localhost:8080
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: FIRECRAWL_API_KEY
+        sync: false
+      - key: INNGEST_EVENT_KEY
+        sync: false
+      - key: INNGEST_SIGNING_KEY
+        sync: false
+      - key: PORT
+        value: "8000"
+      # Lara voice agent model override (optional — defaults to gemini-3.1-flash-live-preview)
+      - key: LARA_VOICE_MODEL
+        value: "gemini-3.1-flash-live-preview"
+      # Lara text chat model override (optional — defaults to gemini/gemini-2.0-flash)
+      - key: LARA_MODEL
+        value: "gemini/gemini-2.0-flash"

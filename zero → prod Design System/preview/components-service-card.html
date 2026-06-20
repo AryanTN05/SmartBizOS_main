@@ -1,0 +1,43 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;padding:22px;background:#08080a;color:#e8e8e8;font-family:"Bricolage Grotesque",sans-serif;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.card{border:1px solid var(--b);background:#151517;padding:24px;min-height:230px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;transition:border-color .3s;}
+.card.hover{--b:#00ffe0;}
+.card:not(.hover){--b:#1a1a1c;}
+.num{font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:#484848;font-weight:600;margin-bottom:20px;display:block;}
+.card.hover .num{color:#00ffe0;}
+h3{font-size:20px;font-weight:800;line-height:1.15;margin:0 0 10px;color:#e8e8e8;letter-spacing:-0.02em;}
+p{font-size:12.5px;color:#888;line-height:1.55;margin:0;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px;padding-top:14px;border-top:1px solid #1a1a1c;}
+.tag{font-size:10px;padding:2px 8px;border-radius:3px;background:#101012;color:#484848;font-weight:500;}
+.glow{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,255,224,0.12),transparent 60%);pointer-events:none;}
+.lbl{position:absolute;top:10px;right:12px;font-size:9px;color:#484848;text-transform:uppercase;letter-spacing:0.12em;}
+</style></head><body>
+<div class="grid">
+  <div class="card">
+    <span class="lbl">Rest</span>
+    <div>
+      <span class="num">01</span>
+      <h3>AI Integration & ML</h3>
+      <p>Embed intelligent features into your product — from LLM-powered interfaces to custom ML pipelines and data workflows.</p>
+    </div>
+    <div class="tags">
+      <span class="tag">OpenAI</span><span class="tag">LangChain</span><span class="tag">Python</span><span class="tag">Vector DBs</span>
+    </div>
+  </div>
+  <div class="card hover">
+    <div class="glow"></div>
+    <span class="lbl" style="color:#00ffe0">Hover</span>
+    <div style="position:relative">
+      <span class="num">02</span>
+      <h3>Web Applications</h3>
+      <p>Full-stack web apps built for scale — from MVPs to enterprise-grade platforms. We handle architecture to deployment.</p>
+    </div>
+    <div class="tags" style="position:relative">
+      <span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span>
+    </div>
+  </div>
+</div>
+</body></html>

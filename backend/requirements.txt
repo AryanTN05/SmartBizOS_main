@@ -1,0 +1,29 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+sqlalchemy[asyncio]>=2.0.36
+asyncpg>=0.30.0
+psycopg2-binary
+python-jose[cryptography]
+passlib[bcrypt]
+pydantic[email]>=2.10.0
+pydantic-settings>=2.7.0
+python-dotenv>=1.0.0
+httpx[socks]>=0.28.0
+python-multipart>=0.0.9
+websockets>=12.0
+
+# Durable workflow + cron layer (M3, M6, scraper sweeps, warmup ping)
+inngest>=0.5
+
+# Enrichment engine dependencies
+firecrawl-py>=1.0.0
+sse-starlette>=2.0.0
+
+# Lara assistant dependencies
+google-genai>=0.1.0
+openai>=1.12.0
+pgvector>=0.2.5
+PyMuPDF>=1.23.21
+resend==2.29.0
+beautifulsoup4>=4.14
+lxml>=5.3

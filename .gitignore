@@ -1,0 +1,68 @@
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.test_c
+# Python
+test_lara.py
+lara_voice_test.html
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# Node / JS / Vite
+node_modules/
+.pnpm-store/
+.turbo/
+.next/
+.vite/
+.vercel/
+out/
+*.tsbuildinfo
+
+# DB / data
+*.sqlite
+*.sqlite3
+*.db
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.cursor/
+/temp
+
+# Claude Code local
+.claude/settings.local.json
+.claude/.session*
+
+# Misc
+*.bak
+*.tmp

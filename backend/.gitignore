@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+
+# Lara local stores
+smartbiz_lara.db
+smartbiz_jarvis.db
+smartbiz_local.db
+*.db-journal
+test_lara.py
+test_lara_ui.html
+test_jarvis.py
+test_jarvis_ui.html
